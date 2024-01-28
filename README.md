@@ -1,0 +1,1 @@
+This app is the final project for the Object-Oriented Programming course, this application provides users with a interface for navigating, rating, and exploring recipes. It features a user login, ensuring accessibility. Serving as a practical culinary tool, it facilitates the discovery, evaluation, and organization of recipes efficiently.
