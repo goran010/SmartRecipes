@@ -23,7 +23,6 @@ namespace RecipeApp
     public partial class MainWindow : Window
     {
         private readonly ApiService apiService;
-        private  List<string> allItems;
 
         public MainWindow()
         {
@@ -32,12 +31,10 @@ namespace RecipeApp
             // Initialize HttpClient
             apiService = new ApiService();
         }
-        private void UpdateListBox(List<string> items)
+        private void Search_GotFocus(object sender, RoutedEventArgs e)
         {
-            foreach (var item in items)
-            {
-                MealsListTextBox.Text += item;
-            }
+            searchPlaceholder.Text = "";
+
         }
         private async void SendApiRequest(string searchText)
         {
@@ -51,17 +48,21 @@ namespace RecipeApp
 
                     // Deserialize the JSON string
                     MealsResponse mealsResponse = JsonConvert.DeserializeObject<MealsResponse>(jsonResponse);
-                Console.WriteLine(mealsResponse.Meals);
+
                     // Access the value of strMeal
                     if (mealsResponse!.Meals?.Count > 0)
                     {
-                        foreach(Meal meal in mealsResponse.Meals) {
-                            Console.WriteLine(meal);
-                            allItems.Add(meal.StrMeal);
-                        }
-                        
-                    ///UpdateListBox(allItems);
+                    //create list of items
+                    List<string> allItems = [];
+
+                    //adding items to list
+
+                    foreach (Meal meal in mealsResponse.Meals) {
+                           allItems.Add(meal.StrMeal);
                     }
+                    //connecting xaml with data
+                    MealsListTextBox.ItemsSource = allItems;
+                }
                     else
                     {
                         MessageBox.Show("No meals found in the response.");
