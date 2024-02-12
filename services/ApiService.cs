@@ -1,6 +1,5 @@
 ﻿using System.Net.Http;
 
-
 namespace RecipeApp.services
 {
     internal class ApiService
