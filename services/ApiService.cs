@@ -1,4 +1,5 @@
 ﻿using System.Net.Http;
+using RecipeApp.View.UserControls;
 
 namespace RecipeApp.services
 {
@@ -19,6 +20,7 @@ namespace RecipeApp.services
 
                 if (response.IsSuccessStatusCode)
                 {
+                    Console.WriteLine(response.Content.ReadAsStringAsync());
                     return await response.Content.ReadAsStringAsync();
                 }
                 else

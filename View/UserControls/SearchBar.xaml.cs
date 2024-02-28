@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Net.Http;
-using System.Threading.Tasks;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using Newtonsoft.Json;
@@ -12,6 +10,9 @@ namespace RecipeApp.View.UserControls
     public class Meal
     {
         public string StrMeal { get; set; }
+        public string StrMealThumb { get; set; }
+        public string strArea{ get; set; }
+
         public Meal()
         {
             StrMeal = string.Empty;
@@ -23,7 +24,7 @@ namespace RecipeApp.View.UserControls
         public List<Meal> Meals { get; set; }
         public MealsResponse()
         {
-            Meals = [];
+            Meals = new List<Meal>();
         }
     }
 
@@ -32,8 +33,7 @@ namespace RecipeApp.View.UserControls
         private readonly ApiService apiService;
         public MainWindow MainWindow { get; set; } = null!;
 
-        public event Action<List<string>> SearchResultReceived = items => { };
-
+        public event Action<List<string[]>> SearchResultReceived = items => { };
 
         public SearchBar()
         {
@@ -52,8 +52,7 @@ namespace RecipeApp.View.UserControls
         private async void SendApiRequest(string searchText)
         {
             //api endpoint
-            string apiEndpoint =
-                "https://www.themealdb.com/api/json/v1/1/search.php?s=" + searchText;
+            string apiEndpoint = "https://www.themealdb.com/api/json/v1/1/search.php?s=" + searchText;
 
             try
             {
@@ -61,23 +60,21 @@ namespace RecipeApp.View.UserControls
                 string jsonResponse = await apiService.GetMealAsync(apiEndpoint);
 
                 // Convert the JSON string
-                MealsResponse mealsResponse = JsonConvert.DeserializeObject<MealsResponse>(
-                    jsonResponse
-                );
+                MealsResponse mealsResponse = JsonConvert.DeserializeObject<MealsResponse>(jsonResponse);
 
                 // Access the value of strMeal
                 if (mealsResponse!.Meals?.Count > 0)
                 {
-                    //create list of items
-                    List<string> allItems = [];
+                    // create list of items
+                    List<string[]> allItems = new List<string[]>();
 
-                    //adding items to list
+                    // adding items to list
                     foreach (Meal meal in mealsResponse.Meals)
                     {
-                        allItems.Add(meal.StrMeal);
+                        allItems.Add(new string[] { meal.StrMeal, meal.StrMealThumb, meal.strArea });
                     }
 
-                    //Invoke the SearchResultReceived event with the allItems list
+                    // Invoke the SearchResultReceived event with the allItems list
                     SearchResultReceived?.Invoke(allItems);
                 }
                 else
@@ -98,7 +95,7 @@ namespace RecipeApp.View.UserControls
 
             if (searchText.Length > 2)
             {
-                //sending api request with searched name
+                // sending api request with searched name
                 SendApiRequest(searchText);
             }
         }
@@ -107,18 +104,16 @@ namespace RecipeApp.View.UserControls
         private void SearchTextBox_GotFocus(object sender, RoutedEventArgs e)
         {
             // When the TextBox gets focus, hide the placeholder
-            searchPlaceholder.Visibility = Visibility.Collapsed;
+            searchPlaceholder.Visibility = System.Windows.Visibility.Collapsed;
         }
 
         // When the TextBox loses focus, show the placeholder if there is no text
         private void SearchTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
-           
             if (string.IsNullOrWhiteSpace(searchTextBox.Text))
             {
-                searchPlaceholder.Visibility = Visibility.Visible;
+                searchPlaceholder.Visibility = System.Windows.Visibility.Visible;
             }
         }
-
     }
 }

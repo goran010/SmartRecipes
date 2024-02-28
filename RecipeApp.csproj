@@ -15,6 +15,7 @@
   <ItemGroup>
     <Folder Include="Assets\images\" />
     <Folder Include="Assets\styles\" />
+    <Folder Include="View\UI\" />
   </ItemGroup>
 
 </Project>
