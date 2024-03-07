@@ -36,8 +36,11 @@ namespace RecipeApp
                 // Replace this with your logic to set ImagePath and Description
                 RecipeCard recipeCard = new()
                 {
+                    //title of recipe
                     RecipeName = recipe[0],
+                    //recipe image
                     ImagePath = recipe[1],
+                    //country of recipe
                     Country = recipe[2]
                 };
 
