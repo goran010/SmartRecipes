@@ -7,27 +7,29 @@ using System.Windows.Controls;
 using Newtonsoft.Json;
 using RecipeApp.services;
 using RecipeApp.View.UserControls;
-
-namespace RecipeApp
+using RecipeApp.Pages;
 {
+        public MainWindow()
+        {
     public class RecipeCard
     {
         public string? RecipeName { get; set; }
         public string? ImagePath { get; set; }
         public string? Country { get; set; }
     }
-    public partial class MainWindow : Window
-    {
-        public MainWindow()
-        {
             InitializeComponent();
             MaxWidth = SystemParameters.PrimaryScreenWidth;
            // searchBar.SearchResultReceived += UpdateMealsListTextBox;
         }
 
+            MaxWidth = SystemParameters.PrimaryScreenWidth;
+           // searchBar.SearchResultReceived += UpdateMealsListTextBox;
+        {
+            if (mainFrame.NavigationService != null)
         
         private void UpdateMealsListTextBox(List<string[]> recipes)
-        {
+        private void Button_Click(object sender, RoutedEventArgs e)
+                {
             // Create a list of RecipeCard objects
             List<RecipeCard> recipeCards = [];
 
@@ -45,15 +47,31 @@ namespace RecipeApp
                     Country = recipe[2]
                 };
 
-                recipeCards.Add(recipeCard);
+            private void Button_Click(object sender, RoutedEventArgs e)
+            {
+                if (mainFrame.NavigationService != null)
+                {
+                    try
+                    {
+                        mainFrame.NavigationService.Navigate(new Pages.ContentRecipesPage());
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Navigation error: {ex.Message}");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("NavigationService is null.");
+                }
             }
+
+            recipeCards.Add(recipeCard);
+
+        }
 
             // Set the ItemsSource of the MealsListTextBox to the list of RecipeCard objects
            // MealsListTextBox.ItemsSource = recipeCards;
-        }
-
-        private void GridCol1Row1_Loaded(object sender, RoutedEventArgs e)
-        {
 
         }
     }

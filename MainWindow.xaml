@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:UserControls="clr-namespace:RecipeApp.View.UserControls"
         xmlns:UI="clr-namespace:RecipeApp.View.UI"
+        xmlns:Pages="clr-namespace:RecipeApp.Pages"
         Title="Recipe App" SizeToContent="WidthAndHeight"
         MinHeight="700" 
         MinWidth="900"
@@ -14,7 +15,8 @@
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="8*"/>
         </Grid.ColumnDefinitions>
-
+ <!-- Frame to Navigate -->
+ <Frame x:Name="mainFrame" NavigationUIVisibility="Hidden" Grid.Row="1"/>
         <Grid Grid.Column="1" >
 
             <Grid.RowDefinitions>
@@ -77,4 +79,5 @@
 
 
 </Window>
+
 
