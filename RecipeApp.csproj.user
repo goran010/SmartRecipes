@@ -7,12 +7,18 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Pages\ContentRecipesPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\UserControls\SearchBar.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\ContentRecipesPage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\UserControls\SearchBar.xaml">
