@@ -57,11 +57,13 @@
 
             <!---BackroundRightGrid-->
             <Grid.Background>
-                <ImageBrush ImageSource="C:\Users\ema01\OneDrive\Dokumenti\Projekt\Assets\images\gradient.png"/>
+                <ImageBrush ImageSource="C:\Users\Admin\Desktop\RecipeApp\Assets\images\gradient.png"/>
+
             </Grid.Background>
             
 
             
+
         </Grid>
         
         <!--LeftGrif-->
