@@ -2,55 +2,77 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:UserControls="clr-namespace:RecipeApp.View.UserControls"
+        xmlns:UI="clr-namespace:RecipeApp.View.UI"
         Title="Recipe App" SizeToContent="WidthAndHeight"
-        MinHeight="600" 
+        MinHeight="700" 
         MinWidth="900"
-        MaxWidth="{x:Static SystemParameters.PrimaryScreenWidth}">
+        MaxWidth="{x:Static SystemParameters.PrimaryScreenWidth}" Width="1054">
 
-    <Grid Background="#F5F5F5">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <!-- Search Bar -->
-            <RowDefinition Height="8*" />
-            <!-- Display Container (80% of window height) -->
-        </Grid.RowDefinitions>
 
-        <!-- Search Bar -->
-        <UserControls:SearchBar x:Name="searchBar" Margin="10,10,10,5"/>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="8*"/>
+        </Grid.ColumnDefinitions>
 
-        <!-- Display Container -->
-        <ListBox Grid.Row="1" Name="MealsListTextBox" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-            <!-- Set ItemsPanel to WrapPanel with Horizontal Orientation -->
-            <ListBox.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel Orientation="Horizontal" />
-                </ItemsPanelTemplate>
-            </ListBox.ItemsPanel>
+        <Grid Grid.Column="1" >
 
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Border BorderBrush="#007ACC" BorderThickness="1" CornerRadius="10" Margin="5" Width="400">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="25*"/>
+                <RowDefinition Height="30*"/>
+                <RowDefinition Height="35*"/>
+            </Grid.RowDefinitions>
 
-                            <Image Grid.Column="0" Source="{Binding ImagePath}" Stretch="Fill" Width="120" Height="120" />
+            <!--GridTopCol1-->
+            <UI:GridTopCol1/>
 
-                            <StackPanel Grid.Column="1" Margin="15">
-                                <TextBlock Text="{Binding RecipeName}" FontSize="20" FontWeight="Bold"  Height="auto" TextWrapping="Wrap" />
-                                <TextBlock Text="{Binding Country}" FontSize="16" FontWeight="Normal" Margin="5" Foreground="#555" TextWrapping="Wrap" />
-                            </StackPanel>
-                        </Grid>
-                    </Border>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+            <!--GridCol1Row1-->
+            <UI:GridCol1Row1 Grid.Row="1"/>
+
+            <Grid Grid.Row="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="70*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Name="textBlockFeatured" Text="Featured" VerticalAlignment="Center"
+                           Margin="20,0,0,0" FontSize="13" Foreground="White" FontFamily="/Assets/Fonts/#Comfortaa"/>
+                <TextBlock Grid.Row="1" Name="textBlockPopularCountries" VerticalAlignment="Center"
+                           Margin="20,0,0,10" Text="Popular Countries" FontSize="18" Foreground="White"
+                           FontFamily="/Assets/Fonts/#Comfortaa"/>
+
+
+                <!---PopularCountriesButtons-->
+
+                <UI:GridPopularCountries Grid.Row="2"/>
+            </Grid>
+            
+            
+            
+            <!--PopularMealsButtons-->
+            <UI:GridPopularMeals Grid.Column="1" Grid.Row="3"/>
+
+
+            <!---BackroundRightGrid-->
+            <Grid.Background>
+                <ImageBrush ImageSource="C:\Users\ema01\OneDrive\Dokumenti\Projekt\Assets\images\gradient.png"/>
+            </Grid.Background>
+            
+
+            
+        </Grid>
+        
+        <!--LeftGrif-->
+        <UI:GridLeft />
 
 
 
 
     </Grid>
+
+
+
 </Window>
 

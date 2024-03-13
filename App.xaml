@@ -4,6 +4,12 @@
              xmlns:local="clr-namespace:RecipeApp"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Assets/styles/GridLeftButtonsStyles.xaml"/>
+                <ResourceDictionary Source="Assets/styles/tBNameOfMealStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
     </Application.Resources>
 </Application>

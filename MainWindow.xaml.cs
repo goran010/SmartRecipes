@@ -22,9 +22,10 @@ namespace RecipeApp
         {
             InitializeComponent();
             MaxWidth = SystemParameters.PrimaryScreenWidth;
-            searchBar.SearchResultReceived += UpdateMealsListTextBox;
+           // searchBar.SearchResultReceived += UpdateMealsListTextBox;
         }
 
+        
         private void UpdateMealsListTextBox(List<string[]> recipes)
         {
             // Create a list of RecipeCard objects
@@ -48,8 +49,12 @@ namespace RecipeApp
             }
 
             // Set the ItemsSource of the MealsListTextBox to the list of RecipeCard objects
-            MealsListTextBox.ItemsSource = recipeCards;
+           // MealsListTextBox.ItemsSource = recipeCards;
         }
 
+        private void GridCol1Row1_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
