@@ -7,12 +7,48 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="View\UI\GridCol1Row1.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\UI\GridLeft.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\UI\GridPopularCountries.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\UI\GridPopularMeals.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\UI\GridTopCol1.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\UserControls\SearchBar.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Assets\styles\GridLeftButtonsStyles.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Assets\styles\tBNameOfMealStyles.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\UI\GridCol1Row1.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\UI\GridLeft.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\UI\GridPopularCountries.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\UI\GridPopularMeals.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\UI\GridTopCol1.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\UserControls\SearchBar.xaml">
