@@ -21,8 +21,7 @@
                    Text="Search..."
                    LostFocus="SearchTextBox_LostFocus"
                    GotFocus="SearchTextBox_GotFocus"/>
-                
-                
+
                 <!-- Actual TextBox -->
                 <TextBox x:Name="searchTextBox" 
                   Grid.Column="0"
@@ -33,11 +32,8 @@
                   Foreground="black"
                   Background="Transparent"
                   TextChanged="SearchTextBox_TextChanged"
-/>
-
-                 
+                  KeyDown="SearchTextBox_KeyDown"/>
             </Grid>
-              
         </Border>
     </Grid>
 

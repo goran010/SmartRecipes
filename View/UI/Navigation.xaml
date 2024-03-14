@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="RecipeApp.View.UI.GridLeft"
+﻿<UserControl x:Class="RecipeApp.View.UI.Navigation"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -17,9 +17,9 @@
         <TextBlock Text="Logo..." Foreground="White"/>
 
         <StackPanel Grid.Row="1" Name="stackPanelContent">
-            <Button Style="{StaticResource GridLeftButton}" Content="Discover"/>
-            <Button Style="{StaticResource GridLeftButton}" Content="About Us"/>
-            <Button Style="{StaticResource GridLeftButton}" Content="Something..."/>
+            <Button Style="{StaticResource GridLeftButton}" Content="Discover" Click="DiscoverButton_Click"/>
+            <Button Style="{StaticResource GridLeftButton}" Content="About Us" Click="AboutUsButton_Click"/>
+            <Button Style="{StaticResource GridLeftButton}" Content="Something..." Click="SomethingButton_Click"/>
         </StackPanel>
     </Grid>
 </UserControl>

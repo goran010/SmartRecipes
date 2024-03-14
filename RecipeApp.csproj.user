@@ -10,7 +10,7 @@
     <Compile Update="View\UI\GridCol1Row1.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\UI\GridLeft.xaml.cs">
+    <Compile Update="View\UI\Navigation.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\UI\GridPopularCountries.xaml.cs">
@@ -39,7 +39,7 @@
     <Page Update="View\UI\GridCol1Row1.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\UI\GridLeft.xaml">
+    <Page Update="View\UI\Navigation.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\UI\GridPopularCountries.xaml">

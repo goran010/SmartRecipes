@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using Newtonsoft.Json;
 using RecipeApp.services;
 
@@ -10,8 +11,8 @@ namespace RecipeApp.View.UserControls
     public class Meal
     {
         public string StrMeal { get; set; }
-        public string StrMealThumb { get; set; }
-        public string strArea{ get; set; }
+        public string? StrMealThumb { get; set; }
+        public string? strArea{ get; set; }
 
         public Meal()
         {
@@ -27,13 +28,18 @@ namespace RecipeApp.View.UserControls
             Meals = new List<Meal>();
         }
     }
-
+   
     public partial class SearchBar : UserControl
     {
+     
+
+        
+
         private readonly ApiService apiService;
         public MainWindow MainWindow { get; set; } = null!;
 
         public event Action<List<string[]>> SearchResultReceived = items => { };
+        public event EventHandler NavigationRequested = delegate { };
 
         public SearchBar()
         {
@@ -58,21 +64,35 @@ namespace RecipeApp.View.UserControls
             {
                 // Read the response from api
                 string jsonResponse = await apiService.GetMealAsync(apiEndpoint);
+                MealsResponse mealsResponse = new();
 
                 // Convert the JSON string
-                MealsResponse mealsResponse = JsonConvert.DeserializeObject<MealsResponse>(jsonResponse);
+                if (jsonResponse != null)
+                {
+                    mealsResponse = JsonConvert.DeserializeObject<MealsResponse>(jsonResponse)!;
+                }
+
 
                 // Access the value of strMeal
                 if (mealsResponse!.Meals?.Count > 0)
                 {
                     // create list of items
-                    List<string[]> allItems = new List<string[]>();
+                    List<string[]> allItems = [];
 
                     // adding items to list
                     foreach (Meal meal in mealsResponse.Meals)
                     {
-                        allItems.Add(new string[] { meal.StrMeal, meal.StrMealThumb, meal.strArea });
+                        // Check if strArea is null or empty before adding it to the list
+                        string area = string.IsNullOrEmpty(meal.strArea) ? "Unknown Area" : meal.strArea;
+
+                        // Check if StrMealThumb is null or empty before adding it to the list
+                        string mealThumb = string.IsNullOrEmpty(meal.StrMealThumb) ? "Unknown Thumb" : meal.StrMealThumb;
+
+                        // Add an array of strings to the list
+                        allItems.Add([meal.StrMeal, mealThumb, area!]);
                     }
+
+
 
                     // Invoke the SearchResultReceived event with the allItems list
                     SearchResultReceived?.Invoke(allItems);
@@ -97,6 +117,22 @@ namespace RecipeApp.View.UserControls
             {
                 // sending api request with searched name
                 SendApiRequest(searchText);
+            }
+        }
+
+        // event handler when searchTextBox is submitet
+        private void SearchTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                try
+                {
+                    NavigationRequested?.Invoke(this, EventArgs.Empty);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Navigation error: {ex.Message}");
+                }
             }
         }
 

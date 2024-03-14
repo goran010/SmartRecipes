@@ -15,9 +15,14 @@
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="8*"/>
         </Grid.ColumnDefinitions>
- <!-- Frame to Navigate -->
- <Frame x:Name="mainFrame" NavigationUIVisibility="Hidden" Grid.Row="1"/>
-        <Grid Grid.Column="1" >
+        <!-- Left navigation -->
+        <UI:Navigation  Grid.Column="0" x:Name="Navigation" />
+        
+        <!-- Frame to Navigate -->
+        <Frame x:Name="mainFrame" NavigationUIVisibility="Hidden" Grid.Column="1"/>
+        
+        <!-- HomeScreenGrid -->
+        <Grid Grid.Column="1" x:Name="homeScreenGrid">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="10*"/>
@@ -27,7 +32,7 @@
             </Grid.RowDefinitions>
 
             <!--GridTopCol1-->
-            <UI:GridTopCol1/>
+            <UserControls:SearchBar x:Name="searchBar"/>
 
             <!--GridCol1Row1-->
             <UI:GridCol1Row1 Grid.Row="1"/>
@@ -50,9 +55,9 @@
 
                 <UI:GridPopularCountries Grid.Row="2"/>
             </Grid>
-            
-            
-            
+
+
+
             <!--PopularMealsButtons-->
             <UI:GridPopularMeals Grid.Column="1" Grid.Row="3"/>
 
@@ -62,22 +67,11 @@
                 <ImageBrush ImageSource="C:\Users\Admin\Desktop\RecipeApp\Assets\images\gradient.png"/>
 
             </Grid.Background>
-            
-
-            
 
         </Grid>
         
-        <!--LeftGrif-->
-        <UI:GridLeft />
-
-
-
-
+       
     </Grid>
-
-
-
 </Window>
 
 

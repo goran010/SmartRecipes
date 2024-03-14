@@ -16,7 +16,7 @@ namespace RecipeApp.Pages
         public ContentRecipesPage()
         {
             InitializeComponent();
-            Console.WriteLine("ContentRecipesPage Loaded");
+            searchBar.SearchResultReceived += UpdateMealsListTextBox;
         }
 
         public void UpdateMealsListTextBox(List<string[]> recipes)

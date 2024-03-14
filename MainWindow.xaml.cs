@@ -7,29 +7,33 @@ using System.Windows.Controls;
 using Newtonsoft.Json;
 using RecipeApp.services;
 using RecipeApp.View.UserControls;
-using RecipeApp.Pages;
+
+namespace RecipeApp
 {
-        public MainWindow()
-        {
     public class RecipeCard
     {
         public string? RecipeName { get; set; }
         public string? ImagePath { get; set; }
         public string? Country { get; set; }
     }
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
             InitializeComponent();
             MaxWidth = SystemParameters.PrimaryScreenWidth;
-           // searchBar.SearchResultReceived += UpdateMealsListTextBox;
+
+            //searchBar events
+            searchBar.SearchResultReceived += UpdateMealsListTextBox;
+            searchBar.NavigationRequested += NavigateToSearchRecipePage;
+
+            //navigation events
+            Navigation.NavigationRequested += NavigateToSearchRecipePage;
+
         }
 
-            MaxWidth = SystemParameters.PrimaryScreenWidth;
-           // searchBar.SearchResultReceived += UpdateMealsListTextBox;
-        {
-            if (mainFrame.NavigationService != null)
-        
         private void UpdateMealsListTextBox(List<string[]> recipes)
-        private void Button_Click(object sender, RoutedEventArgs e)
-                {
+        {
             // Create a list of RecipeCard objects
             List<RecipeCard> recipeCards = [];
 
@@ -47,32 +51,26 @@ using RecipeApp.Pages;
                     Country = recipe[2]
                 };
 
-            private void Button_Click(object sender, RoutedEventArgs e)
-            {
-                if (mainFrame.NavigationService != null)
-                {
-                    try
-                    {
-                        mainFrame.NavigationService.Navigate(new Pages.ContentRecipesPage());
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"Navigation error: {ex.Message}");
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("NavigationService is null.");
-                }
+                recipeCards.Add(recipeCard);
             }
 
-            recipeCards.Add(recipeCard);
-
+            // Set the ItemsSource of the MealsListTextBox to the list of RecipeCard objects
+            // MealsListTextBox.ItemsSource = recipeCards;
         }
 
-            // Set the ItemsSource of the MealsListTextBox to the list of RecipeCard objects
-           // MealsListTextBox.ItemsSource = recipeCards;
-
+        private void NavigateToSearchRecipePage(object? sender, EventArgs e)
+        {
+            try
+            {
+                //hide home screen grid
+                homeScreenGrid.Visibility = Visibility.Collapsed;
+                // Navigate to the desired page using mainFrame or any other navigation method you have
+                mainFrame.NavigationService?.Navigate(new Pages.ContentRecipesPage());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Navigation error: {ex.Message}");
+            }
         }
     }
 }
