@@ -7,8 +7,8 @@
         xmlns:UserControls="clr-namespace:RecipeApp.View.UserControls"
         mc:Ignorable="d"
         Title="ContentPage" 
-        MinHeight="500"
-        MinWidth="700"
+        MinHeight="700"
+        MinWidth="900"
         MaxWidth="{x:Static SystemParameters.PrimaryScreenWidth}"
         HorizontalAlignment="Stretch"
         VerticalAlignment="Stretch">

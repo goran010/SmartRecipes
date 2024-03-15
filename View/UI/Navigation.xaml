@@ -5,10 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RecipeApp.View.UI"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-
-
-        
+             d:DesignHeight="450" d:DesignWidth="200">
     <Grid Background="#193869">
         <Grid.RowDefinitions>
             <RowDefinition Height="25*"/>
@@ -17,6 +14,7 @@
         <TextBlock Text="Logo..." Foreground="White"/>
 
         <StackPanel Grid.Row="1" Name="stackPanelContent">
+            <Button Style="{StaticResource GridLeftButton}" Content="Home" Click="HomeButton_Click"/>
             <Button Style="{StaticResource GridLeftButton}" Content="Discover" Click="DiscoverButton_Click"/>
             <Button Style="{StaticResource GridLeftButton}" Content="About Us" Click="AboutUsButton_Click"/>
             <Button Style="{StaticResource GridLeftButton}" Content="Something..." Click="SomethingButton_Click"/>

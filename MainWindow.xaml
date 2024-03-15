@@ -20,57 +20,6 @@
         
         <!-- Frame to Navigate -->
         <Frame x:Name="mainFrame" NavigationUIVisibility="Hidden" Grid.Column="1"/>
-        
-        <!-- HomeScreenGrid -->
-        <Grid Grid.Column="1" x:Name="homeScreenGrid">
-
-            <Grid.RowDefinitions>
-                <RowDefinition Height="10*"/>
-                <RowDefinition Height="25*"/>
-                <RowDefinition Height="30*"/>
-                <RowDefinition Height="35*"/>
-            </Grid.RowDefinitions>
-
-            <!--GridTopCol1-->
-            <UserControls:SearchBar x:Name="searchBar"/>
-
-            <!--GridCol1Row1-->
-            <UI:GridCol1Row1 Grid.Row="1"/>
-
-            <Grid Grid.Row="2">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="10*"/>
-                    <RowDefinition Height="20*"/>
-                    <RowDefinition Height="70*"/>
-                </Grid.RowDefinitions>
-
-                <TextBlock Name="textBlockFeatured" Text="Featured" VerticalAlignment="Center"
-                           Margin="20,0,0,0" FontSize="13" Foreground="White" FontFamily="/Assets/Fonts/#Comfortaa"/>
-                <TextBlock Grid.Row="1" Name="textBlockPopularCountries" VerticalAlignment="Center"
-                           Margin="20,0,0,10" Text="Popular Countries" FontSize="18" Foreground="White"
-                           FontFamily="/Assets/Fonts/#Comfortaa"/>
-
-
-                <!---PopularCountriesButtons-->
-
-                <UI:GridPopularCountries Grid.Row="2"/>
-            </Grid>
-
-
-
-            <!--PopularMealsButtons-->
-            <UI:GridPopularMeals Grid.Column="1" Grid.Row="3"/>
-
-
-            <!---BackroundRightGrid-->
-            <Grid.Background>
-                <ImageBrush ImageSource="C:\Users\Admin\Desktop\RecipeApp\Assets\images\gradient.png"/>
-
-            </Grid.Background>
-
-        </Grid>
-        
-       
     </Grid>
 </Window>
 

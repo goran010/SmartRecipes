@@ -17,18 +17,31 @@ namespace RecipeApp.View.UI
 {
     public partial class Navigation : UserControl
     {
-        public event EventHandler NavigationRequested = delegate { };
+        public event EventHandler NavigateToHomePage = delegate { };
+        public event EventHandler NavigateToSearchRecipePage = delegate { };
+        public event EventHandler NavigateToAboutPage = delegate { };
         public Navigation()
         {
-            InitializeComponent();
-            
+            InitializeComponent();        
+        }
+
+        private void HomeButton_Click(object sender, RoutedEventArgs e)
+        {
+
+            try
+            {
+                NavigateToHomePage?.Invoke(this, EventArgs.Empty);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Navigation error: {ex.Message}");
+            }
         }
         private void DiscoverButton_Click(object sender, RoutedEventArgs e)
         {
-            // Your code when the Discover button is clicked
             try
             {
-                NavigationRequested?.Invoke(this, EventArgs.Empty);
+                NavigateToSearchRecipePage?.Invoke(this, EventArgs.Empty);
             }
             catch (Exception ex)
             {
@@ -38,12 +51,26 @@ namespace RecipeApp.View.UI
 
         private void AboutUsButton_Click(object sender, RoutedEventArgs e)
         {
-            // Your code when the About Us button is clicked
+            try
+            {
+                NavigateToAboutPage?.Invoke(this, EventArgs.Empty);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Navigation error: {ex.Message}");
+            }
         }
 
         private void SomethingButton_Click(object sender, RoutedEventArgs e)
-        {
-            // Your code when the Something... button is clicked
+        {    
+            try
+            {
+                NavigateToSearchRecipePage?.Invoke(this, EventArgs.Empty);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Navigation error: {ex.Message}");
+            }
         }
     }
 }

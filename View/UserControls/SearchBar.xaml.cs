@@ -25,21 +25,17 @@ namespace RecipeApp.View.UserControls
         public List<Meal> Meals { get; set; }
         public MealsResponse()
         {
-            Meals = new List<Meal>();
+            Meals = [];
         }
     }
    
     public partial class SearchBar : UserControl
     {
-     
-
-        
-
         private readonly ApiService apiService;
         public MainWindow MainWindow { get; set; } = null!;
 
         public event Action<List<string[]>> SearchResultReceived = items => { };
-        public event EventHandler NavigationRequested = delegate { };
+        public event Action<List<string[]>> NavigationRequested = items => { };
 
         public SearchBar()
         {
@@ -51,7 +47,7 @@ namespace RecipeApp.View.UserControls
             //events
             searchTextBox.GotFocus += SearchTextBox_GotFocus;
             searchTextBox.LostFocus += SearchTextBox_LostFocus;
-            SearchResultReceived = delegate { };
+           SearchResultReceived = delegate { };
         }
 
         // sending api request and showing response
@@ -95,6 +91,7 @@ namespace RecipeApp.View.UserControls
 
 
                     // Invoke the SearchResultReceived event with the allItems list
+                   
                     SearchResultReceived?.Invoke(allItems);
                 }
                 else
@@ -111,13 +108,7 @@ namespace RecipeApp.View.UserControls
         // event handler when searchTextBox text is changed
         void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            string searchText = searchTextBox.Text.ToLower();
-
-            if (searchText.Length > 2)
-            {
-                // sending api request with searched name
-                SendApiRequest(searchText);
-            }
+          
         }
 
         // event handler when searchTextBox is submitet
@@ -127,7 +118,8 @@ namespace RecipeApp.View.UserControls
             {
                 try
                 {
-                    NavigationRequested?.Invoke(this, EventArgs.Empty);
+                    string searchText = searchTextBox.Text;
+                    SendApiRequest(searchText);
                 }
                 catch (Exception ex)
                 {

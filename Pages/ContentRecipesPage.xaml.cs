@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Windows;
 using System.Windows.Controls;
 
 namespace RecipeApp.Pages
@@ -13,19 +12,28 @@ namespace RecipeApp.Pages
 
     public partial class ContentRecipesPage : Page
     {
-        public ContentRecipesPage()
+        private readonly List<string[]> recipes;
+
+        public ContentRecipesPage(List<string[]> recipes)
         {
             InitializeComponent();
+            this.recipes = recipes;
+            Console.WriteLine(recipes.Count);
+
+            // Show recipes on first load
+            UpdateMealsListTextBox(recipes);
+
+            // Subscribe to events
             searchBar.SearchResultReceived += UpdateMealsListTextBox;
         }
 
-        public void UpdateMealsListTextBox(List<string[]> recipes)
+        private void UpdateMealsListTextBox(List<string[]> recipes)
         {
-            List<RecipeCard> recipeCards = new List<RecipeCard>();
+            List<RecipeCard> recipeCards = new();
 
             foreach (string[] recipe in recipes)
             {
-                RecipeCard recipeCard = new RecipeCard
+                RecipeCard recipeCard = new()
                 {
                     RecipeName = recipe[0],
                     ImagePath = recipe[1],
@@ -39,4 +47,6 @@ namespace RecipeApp.Pages
         }
     }
 }
+
+
 

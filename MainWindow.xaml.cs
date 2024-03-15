@@ -1,71 +1,84 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Net.Http;
-using System.Threading.Tasks;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using Newtonsoft.Json;
-using RecipeApp.services;
+using RecipeApp.Pages;
 using RecipeApp.View.UserControls;
+using RecipeApp.View.UI;
 
 namespace RecipeApp
 {
-    public class RecipeCard
-    {
-        public string? RecipeName { get; set; }
-        public string? ImagePath { get; set; }
-        public string? Country { get; set; }
-    }
     public partial class MainWindow : Window
     {
+        private HomePage homePage;
+        private List<string[]> recipes;
         public MainWindow()
         {
             InitializeComponent();
             MaxWidth = SystemParameters.PrimaryScreenWidth;
 
-            //searchBar events
-            searchBar.SearchResultReceived += UpdateMealsListTextBox;
-            searchBar.NavigationRequested += NavigateToSearchRecipePage;
+            // Subscribe to navigation events
+            Navigation.NavigateToSearchRecipePage += NavigateToSearchRecipePage;
+            Navigation.NavigateToAboutPage += NavigateToAboutPage;
+            Navigation.NavigateToHomePage += NavigateToHomePage;
 
-            //navigation events
-            Navigation.NavigationRequested += NavigateToSearchRecipePage;
+            // Instantiate HomePage
+            homePage = new HomePage();
+
+            // Subscribe to events
+            homePage.UpdateMealsList += HomePage_UpdateMealsList;
+
+            // Show HomePage in the Frame
+            mainFrame.NavigationService?.Navigate(homePage);
+
+            Loaded += MainWindow_Loaded;
 
         }
 
-        private void UpdateMealsListTextBox(List<string[]> recipes)
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            // Create a list of RecipeCard objects
-            List<RecipeCard> recipeCards = [];
+            // Initialize the recipes list
+            recipes = [];
+        }
 
-            // For each string array in the recipes list, create a new RecipeCard and add it to the recipeCards list
-            foreach (string[] recipe in recipes)
-            {
-                // Replace this with your logic to set ImagePath and Description
-                RecipeCard recipeCard = new()
-                {
-                    //title of recipe
-                    RecipeName = recipe[0],
-                    //recipe image
-                    ImagePath = recipe[1],
-                    //country of recipe
-                    Country = recipe[2]
-                };
-
-                recipeCards.Add(recipeCard);
-            }
-
-            // Set the ItemsSource of the MealsListTextBox to the list of RecipeCard objects
-            // MealsListTextBox.ItemsSource = recipeCards;
+        private void HomePage_UpdateMealsList(List<string[]> recipes)
+        {
+            // Update the recipes list with new recipes
+            mainFrame.NavigationService?.Navigate(new ContentRecipesPage(recipes));
         }
 
         private void NavigateToSearchRecipePage(object? sender, EventArgs e)
         {
             try
             {
-                //hide home screen grid
-                homeScreenGrid.Visibility = Visibility.Collapsed;
-                // Navigate to the desired page using mainFrame or any other navigation method you have
-                mainFrame.NavigationService?.Navigate(new Pages.ContentRecipesPage());
+                // Navigate to the search recipe page and pass the recipes
+                mainFrame.NavigationService?.Navigate(new ContentRecipesPage(recipes));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Navigation error: {ex.Message}");
+            }
+        }
+
+        private void NavigateToAboutPage(object? sender, EventArgs e)
+        {
+            try
+            {
+                // Navigate to the about page
+                mainFrame.NavigationService?.Navigate(new AboutPage());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Navigation error: {ex.Message}");
+            }
+        }
+
+        private void NavigateToHomePage(object? sender, EventArgs e)
+        {
+            try
+            {
+                // Navigate to the home page
+                mainFrame.NavigationService?.Navigate(new HomePage());
             }
             catch (Exception ex)
             {
