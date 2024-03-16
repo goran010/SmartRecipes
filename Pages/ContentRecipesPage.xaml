@@ -15,11 +15,15 @@
 
 
     <Grid Background="#F5F5F5">
+
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
             <!-- Search Bar -->
-            <RowDefinition Height="8*" />
+            <RowDefinition Height="1*" />
+            
+            <RowDefinition Height="1*" />
             <!-- Display Container (80% of window height) -->
+            <RowDefinition Height="8*" />
+           
         </Grid.RowDefinitions>
 
         <!-- Search Bar -->

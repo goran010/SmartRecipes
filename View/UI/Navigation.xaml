@@ -17,7 +17,7 @@
             <Button Style="{StaticResource GridLeftButton}" Content="Home" Click="HomeButton_Click"/>
             <Button Style="{StaticResource GridLeftButton}" Content="Discover" Click="DiscoverButton_Click"/>
             <Button Style="{StaticResource GridLeftButton}" Content="About Us" Click="AboutUsButton_Click"/>
-            <Button Style="{StaticResource GridLeftButton}" Content="Something..." Click="SomethingButton_Click"/>
+            <Button Style="{StaticResource GridLeftButton}" Content="Something..."/>
         </StackPanel>
     </Grid>
 </UserControl>

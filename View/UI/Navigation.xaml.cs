@@ -61,16 +61,6 @@ namespace RecipeApp.View.UI
             }
         }
 
-        private void SomethingButton_Click(object sender, RoutedEventArgs e)
-        {    
-            try
-            {
-                NavigateToSearchRecipePage?.Invoke(this, EventArgs.Empty);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Navigation error: {ex.Message}");
-            }
-        }
+ 
     }
 }

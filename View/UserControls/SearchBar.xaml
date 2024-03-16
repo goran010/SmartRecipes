@@ -19,7 +19,7 @@
                    Background="white"
                    IsHitTestVisible="False"
                    Text="Search..."
-                   LostFocus="SearchTextBox_LostFocus"
+            
                    GotFocus="SearchTextBox_GotFocus"/>
 
                 <!-- Actual TextBox -->

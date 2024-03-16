@@ -18,7 +18,6 @@ namespace RecipeApp.Pages
         {
             InitializeComponent();
             this.recipes = recipes;
-            Console.WriteLine(recipes.Count);
 
             // Show recipes on first load
             UpdateMealsListTextBox(recipes);
@@ -44,6 +43,7 @@ namespace RecipeApp.Pages
             }
 
             MealsListTextBox.ItemsSource = recipeCards;
+           
         }
     }
 }

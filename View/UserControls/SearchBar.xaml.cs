@@ -46,7 +46,6 @@ namespace RecipeApp.View.UserControls
 
             //events
             searchTextBox.GotFocus += SearchTextBox_GotFocus;
-            searchTextBox.LostFocus += SearchTextBox_LostFocus;
            SearchResultReceived = delegate { };
         }
 
@@ -87,12 +86,15 @@ namespace RecipeApp.View.UserControls
                         // Add an array of strings to the list
                         allItems.Add([meal.StrMeal, mealThumb, area!]);
                     }
-
-
-
-                    // Invoke the SearchResultReceived event with the allItems list
-                   
+                    // Invoke the SearchResultReceived event with the allItems list             
                     SearchResultReceived?.Invoke(allItems);
+                    searchTextBox.Text = "";
+                    //searchTextBox.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+                    Keyboard.ClearFocus();
+                    if (string.IsNullOrWhiteSpace(searchTextBox.Text))
+                    {
+                        searchPlaceholder.Visibility = Visibility.Visible;
+                    }
                 }
                 else
                 {
@@ -108,7 +110,7 @@ namespace RecipeApp.View.UserControls
         // event handler when searchTextBox text is changed
         void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-          
+            searchPlaceholder.Visibility = System.Windows.Visibility.Collapsed;
         }
 
         // event handler when searchTextBox is submitet
@@ -133,15 +135,6 @@ namespace RecipeApp.View.UserControls
         {
             // When the TextBox gets focus, hide the placeholder
             searchPlaceholder.Visibility = System.Windows.Visibility.Collapsed;
-        }
-
-        // When the TextBox loses focus, show the placeholder if there is no text
-        private void SearchTextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(searchTextBox.Text))
-            {
-                searchPlaceholder.Visibility = System.Windows.Visibility.Visible;
-            }
-        }
+        }    
     }
 }
