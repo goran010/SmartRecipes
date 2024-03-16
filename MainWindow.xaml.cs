@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows;
 using RecipeApp.Pages;
-using RecipeApp.View.UserControls;
 using RecipeApp.View.UI;
 
 namespace RecipeApp
-{
-    public partial class MainWindow : Window
     {
-        private HomePage homePage;
-        private List<string[]> recipes;
-        public MainWindow()
+    public partial class MainWindow : Window
         {
+        private readonly HomePage homePage;
+        private List<string[]> recipes = [];
+
+        public MainWindow ()
+            {
             InitializeComponent();
             MaxWidth = SystemParameters.PrimaryScreenWidth;
 
@@ -25,65 +22,76 @@ namespace RecipeApp
             // Instantiate HomePage
             homePage = new HomePage();
 
-            // Subscribe to events
-            homePage.UpdateMealsList += HomePage_UpdateMealsList;
-
             // Show HomePage in the Frame
             mainFrame.NavigationService?.Navigate(homePage);
+            }
 
-            Loaded += MainWindow_Loaded;
-
-        }
-
-        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            // Initialize the recipes list
-            recipes = [];
-        }
-
-        private void HomePage_UpdateMealsList(List<string[]> recipes)
-        {
+        public void HomePage_UpdateMealsList ( List<string[]> recipes )
+            {
             // Update the recipes list with new recipes
-            mainFrame.NavigationService?.Navigate(new ContentRecipesPage(recipes));
-        }
+            this.recipes = recipes;
+            mainFrame.Content = (new ContentRecipesPage(recipes));
+            }
 
-        private void NavigateToSearchRecipePage(object? sender, EventArgs e)
-        {
-            try
+        private void NavigateToSearchRecipePage ( object? sender, EventArgs e )
             {
+            try
+                {
                 // Navigate to the search recipe page and pass the recipes
-                mainFrame.NavigationService?.Navigate(new ContentRecipesPage(recipes));
-            }
+                mainFrame.Content = (new ContentRecipesPage(recipes));
+                }
             catch (Exception ex)
-            {
+                {
                 MessageBox.Show($"Navigation error: {ex.Message}");
+                }
             }
-        }
 
-        private void NavigateToAboutPage(object? sender, EventArgs e)
-        {
-            try
+        private void NavigateToAboutPage ( object? sender, EventArgs e )
             {
+            try
+                {
                 // Navigate to the about page
-                mainFrame.NavigationService?.Navigate(new AboutPage());
-            }
+                mainFrame.Content = (new AboutPage());
+                }
             catch (Exception ex)
-            {
+                {
                 MessageBox.Show($"Navigation error: {ex.Message}");
+                }
             }
-        }
 
-        private void NavigateToHomePage(object? sender, EventArgs e)
-        {
+        private void NavigateToHomePage ( object? sender, EventArgs e )
+            {
             try
-            {
+                {
                 // Navigate to the home page
-                mainFrame.NavigationService?.Navigate(new HomePage());
-            }
+                mainFrame.Content = (new HomePage());
+                }
             catch (Exception ex)
-            {
+                {
                 MessageBox.Show($"Navigation error: {ex.Message}");
+                }
+            }
+
+        public void NavigateToShowRecipePage ( object[] recipeDetails )
+            {
+            try
+                {
+                // Extract recipe details from the object array
+                string country = recipeDetails[0] as string ?? "";
+                string recipeName = recipeDetails[1] as string ?? "";
+                string imagePath = recipeDetails[2] as string ?? "";
+                string instructions = recipeDetails[3] as string ?? "";
+                string category = recipeDetails[4] as string ?? "";
+
+                // Navigate to the recipe details page, passing the extracted details
+                mainFrame.Content = (new ShowRecipe(country, recipeName, imagePath, instructions, category));
+                }
+            catch (Exception ex)
+                {
+                MessageBox.Show($"Navigation error: {ex.Message}");
+                }
             }
         }
     }
-}
+
+

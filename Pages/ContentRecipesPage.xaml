@@ -30,7 +30,7 @@
         <UserControls:SearchBar x:Name="searchBar" Margin="10,10,10,5"/>
 
         <!-- Display Container -->
-        <ListBox Grid.Row="1" Name="MealsListTextBox" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+        <ListBox Grid.Row="2" Name="MealsListTextBox" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <!-- Set ItemsPanel to WrapPanel with Horizontal Orientation -->
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -40,7 +40,7 @@
 
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Border BorderBrush="#007ACC" BorderThickness="1" CornerRadius="10" Margin="5" Width="400">
+                    <Border BorderBrush="#007ACC" BorderThickness="1" CornerRadius="10" Margin="5" Width="400"  MouseLeftButtonDown="Card_Clicked">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
@@ -58,9 +58,5 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-
-
-
-
     </Grid>
 </Page>
