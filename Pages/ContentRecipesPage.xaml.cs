@@ -27,22 +27,17 @@ namespace RecipeApp.Pages
 
         private void UpdateMealsListTextBox ( List<string[]> recipes )
             {
-            List<RecipeCard> recipeCards = [];
-
-            foreach (string[] recipe in recipes)
+            // Create a list of RecipeCard objects using LINQ
+            List<RecipeCard> recipeCards = recipes.Select(recipe => new RecipeCard
                 {
-                RecipeCard recipeCard = new()
-                    {
-                    RecipeName = recipe[0],
-                    ImagePath = recipe[1],
-                    Country = recipe[2],
-                    Category = recipe[3],
-                    Instructions = recipe[4]
-                    };
+                RecipeName = recipe[0],
+                ImagePath = recipe[1],
+                Country = recipe[2],
+                Category = recipe[3],
+                Instructions = recipe[4]
+                }).ToList();
 
-                recipeCards.Add(recipeCard);
-                }
-            // Setting source to recipeCards list
+            // Set the ItemsSource of MealsListTextBox to the recipeCards list
             MealsListTextBox.ItemsSource = recipeCards;
             }
 
@@ -54,16 +49,17 @@ namespace RecipeApp.Pages
                 // Ensure data is not null before accessing its properties
                 if (data != null)
                     {
-                    Console.WriteLine(data.RecipeName);
+                    // Extract recipe details from the data object
                     string country = data.Country ?? "";
                     string recipeName = data.RecipeName ?? "";
                     string imagePath = data.ImagePath ?? "";
                     string instructions = data.Instructions ?? "";
                     string category = data.Category ?? "";
 
-                    // Create an object array with all the string properties using curly braces
+                    // Create an object array with all the string properties
                     object[] recipeDetails = [country, recipeName, imagePath, instructions, category];
 
+                    // Navigate to the recipe details page, passing the recipe details
                     ((MainWindow)System.Windows.Application.Current.MainWindow).NavigateToShowRecipePage(recipeDetails);
                     }
                 else

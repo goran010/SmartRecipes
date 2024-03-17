@@ -52,56 +52,40 @@ namespace RecipeApp.View.UserControls
         // sending api request and showing response
         private async void SendApiRequest ( string searchText )
             {
-            //api endpoint
-            string apiEndpoint = "https://www.themealdb.com/api/json/v1/1/search.php?s=" + searchText;
-
             try
                 {
-                // Read the response from api
+                // Construct API endpoint
+                string apiEndpoint = $"https://www.themealdb.com/api/json/v1/1/search.php?s={searchText}";
+
+                // Get response from the API
                 string jsonResponse = await apiService.GetMealAsync(apiEndpoint);
-                MealsResponse mealsResponse = new();
 
-                // Convert the JSON string
-                if (jsonResponse != null)
+                // Deserialize JSON response
+                MealsResponse mealsResponse = JsonConvert.DeserializeObject<MealsResponse>(jsonResponse) ?? new MealsResponse();
+
+                // Process the response
+                if (mealsResponse.Meals != null && mealsResponse.Meals.Count > 0)
                     {
-                    mealsResponse = JsonConvert.DeserializeObject<MealsResponse>(jsonResponse)!;
-                    }
-
-
-                // Access the value of strMeal
-                if (mealsResponse!.Meals?.Count > 0)
+                    // Create a list of items
+                    List<string[]> allItems = mealsResponse.Meals.Select(meal => new string[]
                     {
-                    // create list of items
-                    List<string[]> allItems = [];
+                        string.IsNullOrEmpty(meal.StrMeal) ? "Unknown Meal" : meal.StrMeal,
+                        string.IsNullOrEmpty(meal.StrMealThumb) ? "Unknown Thumb" : meal.StrMealThumb,
+                        string.IsNullOrEmpty(meal.StrArea) ? "Unknown Area" : meal.StrArea,
+                        string.IsNullOrEmpty(meal.StrCategory) ? "Unknown Category" : meal.StrCategory,
+                        string.IsNullOrEmpty(meal.StrInstructions) ? "Unknown Instructions" : meal.StrInstructions
+                    }).ToList();
 
-                    // adding items to list
-                    foreach (Meal meal in mealsResponse.Meals)
-                        {
-                        // Check if StrMealThumb is null or empty before adding it to the list
-                        string mealName = string.IsNullOrEmpty(meal.StrMeal) ? "Unknown Thumb" : meal.StrMeal;
+                    // Invoke the method to update meals list
+                    ((MainWindow)System.Windows.Application.Current.MainWindow).HomePage_UpdateMealsList(allItems);
 
-                        // Check if strArea is null or empty before adding it to the list
-                        string area = string.IsNullOrEmpty(meal.StrArea) ? "Unknown Area" : meal.StrArea;
-
-                        // Check if StrMealThumb is null or empty before adding it to the list
-                        string mealImage = string.IsNullOrEmpty(meal.StrMealThumb) ? "Unknown Thumb" : meal.StrMealThumb;
-
-                        string strCategory = string.IsNullOrEmpty(meal.StrCategory) ? "Unknown Category" : meal.StrCategory;
-
-                        string strInstructions = string.IsNullOrEmpty(meal.StrInstructions) ? "Unknown Category" : meal.StrInstructions;
-
-                        // Add an array of strings to the list
-                        allItems.Add([mealName, mealImage, area, strCategory, strInstructions]);
-                        }
-                    // Invoke the SearchResultReceived event with the allItems list             
-                   ((MainWindow)System.Windows.Application.Current.MainWindow).HomePage_UpdateMealsList(allItems);
+                    // Clear search text box
                     searchTextBox.Text = "";
-                    //searchTextBox.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+
+                    // Clear focus and show placeholder if search text is empty
                     Keyboard.ClearFocus();
                     if (string.IsNullOrWhiteSpace(searchTextBox.Text))
-                        {
                         searchPlaceholder.Visibility = Visibility.Visible;
-                        }
                     }
                 else
                     {
@@ -114,22 +98,17 @@ namespace RecipeApp.View.UserControls
                 }
             }
 
-        // event handler when searchTextBox is submitet
+
+        // event handler when searchTextBox is submitet, send api requst with searchText
         private void SearchTextBox_KeyDown ( object sender, KeyEventArgs e )
             {
             if (e.Key == Key.Enter)
                 {
-                try
-                    {
-                    string searchText = searchTextBox.Text;
-                    SendApiRequest(searchText);
-                    }
-                catch (Exception ex)
-                    {
-                    MessageBox.Show($"Navigation error: {ex.Message}");
-                    }
+                string searchText = searchTextBox.Text;
+                SendApiRequest(searchText);
                 }
             }
+
 
         // event handler when searchTextBox text is changed
         void SearchTextBox_TextChanged ( object sender, TextChangedEventArgs e )
