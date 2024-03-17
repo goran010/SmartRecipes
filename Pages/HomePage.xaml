@@ -7,7 +7,7 @@
         Title="Recipe App" 
         MinHeight="700" 
         MinWidth="900"
-        MaxWidth="{x:Static SystemParameters.PrimaryScreenWidth}" Width="1054">
+        MaxWidth="{x:Static SystemParameters.PrimaryScreenWidth}">
 
     
         <!-- HomeScreenGrid -->
@@ -53,8 +53,7 @@
 
         <!---BackroundRightGrid-->
         <Grid.Background>
-            <ImageBrush ImageSource="C:\Users\Admin\Desktop\RecipeApp\Assets\images\gradient.png"/>
-
+            <ImageBrush ImageSource="/RecipeApp;component/Assets/images/gradient.png"/>
         </Grid.Background>
 
     </Grid>

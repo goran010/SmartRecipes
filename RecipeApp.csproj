@@ -11,6 +11,11 @@
   <ItemGroup>
     <None Remove="Assets\Fonts\Comfortaa-VariableFont_wght.ttf" />
     <None Remove="Assets\Fonts\Pacifico-Regular.ttf" />
+    <None Remove="Assets\images\french.jpg" />
+    <None Remove="Assets\images\gradient.png" />
+    <None Remove="Assets\images\indian.jpg" />
+    <None Remove="Assets\images\indianFood.jpg" />
+    <None Remove="Assets\images\italian.jpg" />
     <None Remove="Assets\images\proba.jpg" />
   </ItemGroup>
 
@@ -22,7 +27,25 @@
   <ItemGroup>
     <Resource Include="Assets\Fonts\Comfortaa-VariableFont_wght.ttf" />
     <Resource Include="Assets\Fonts\Pacifico-Regular.ttf" />
+    <Resource Include="Assets\images\french.jpg">
+      <CopyToOutputDirectory></CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\images\gradient.png">
+      <CopyToOutputDirectory></CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\images\indianFood.jpg">
+      <CopyToOutputDirectory></CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\images\italian.jpg">
+      <CopyToOutputDirectory></CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Assets\images\proba.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Assets\images\indian.jpg">
+      <CopyToOutputDirectory></CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
