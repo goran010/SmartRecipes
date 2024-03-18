@@ -11,12 +11,17 @@
   <ItemGroup>
     <None Remove="Assets\Fonts\Comfortaa-VariableFont_wght.ttf" />
     <None Remove="Assets\Fonts\Pacifico-Regular.ttf" />
+    <None Remove="Assets\images\beefWellington.jpg" />
+    <None Remove="Assets\images\bolognese.jpeg" />
+    <None Remove="Assets\images\carbonara.png" />
     <None Remove="Assets\images\french.jpg" />
+    <None Remove="Assets\images\friedChicken.jpeg" />
     <None Remove="Assets\images\gradient.png" />
     <None Remove="Assets\images\indian.jpg" />
     <None Remove="Assets\images\indianFood.jpg" />
     <None Remove="Assets\images\italian.jpg" />
     <None Remove="Assets\images\proba.jpg" />
+    <None Remove="Assets\images\sushi.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,6 +32,9 @@
   <ItemGroup>
     <Resource Include="Assets\Fonts\Comfortaa-VariableFont_wght.ttf" />
     <Resource Include="Assets\Fonts\Pacifico-Regular.ttf" />
+    <Resource Include="Assets\images\beefWellington.jpg" />
+    <Resource Include="Assets\images\bolognese.jpeg" />
+    <Resource Include="Assets\images\carbonara.png" />
     <Resource Include="Assets\images\french.jpg">
       <CopyToOutputDirectory></CopyToOutputDirectory>
     </Resource>
@@ -40,6 +48,11 @@
       <CopyToOutputDirectory></CopyToOutputDirectory>
     </Resource>
     <Resource Include="Assets\images\proba.jpg" />
+    <Resource Include="Assets\images\sushi.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\images\friedChicken.jpeg" />
   </ItemGroup>
 
   <ItemGroup>

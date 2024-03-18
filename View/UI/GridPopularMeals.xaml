@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:RecipeApp.View.UI"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-  
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="10*"/>
@@ -15,13 +15,13 @@
         </Grid.RowDefinitions>
 
         <TextBlock Name="tBFeaturedMeals" Text="Featured" 
-                           VerticalAlignment="Center"
-                           Margin="20,0,0,0" FontSize="13" Foreground="White" 
-                           FontFamily="/RecipeApp;component/Assets/Fonts/#Comfortaa"/>
+                   VerticalAlignment="Center"
+                   Margin="20,0,0,0" FontSize="13" Foreground="White" 
+                   FontFamily="/RecipeApp;component/Assets/Fonts/#Comfortaa"/>
 
         <TextBlock Name="tBPopularMeals" Grid.Row="1" VerticalAlignment="Center"
-                           Margin="20,0,0,10" Text="Popular Meals" FontSize="18" 
-                           Foreground="White" FontFamily="/RecipeApp;component/Assets/Fonts/#Comfortaa"/>
+                   Margin="20,0,0,10" Text="Popular Meals" FontSize="18" 
+                   Foreground="White" FontFamily="/RecipeApp;component/Assets/Fonts/#Comfortaa"/>
 
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
@@ -33,82 +33,80 @@
             </Grid.ColumnDefinitions>
 
             <!---Button1-->
-            <Button HorizontalAlignment="Stretch" Grid.Column="0" Background="Transparent" BorderBrush="Transparent" Margin="10,20,10,20">
+            <Button Click="MealClicked" HorizontalAlignment="Stretch" Grid.Column="0" Background="Transparent" BorderBrush="Transparent" Margin="10,20,10,20">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <Image Source="/RecipeApp;component/Assets/images/proba.jpg" Margin="0,0,0,5"
-                                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                    <Image Source="/RecipeApp;component/Assets/images/sushi.png" Margin="0,0,0,5"
+                           HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                     <TextBlock Name="tBNameOfMeal1" Text="Sushi" 
-                                       Style="{StaticResource tBNameOfMealStyles}"/>
+                               Style="{StaticResource tBNameOfMealStyles}"/>
                 </Grid>
             </Button>
 
             <!---Button2-->
-            <Button HorizontalAlignment="Stretch" Grid.Column="1" Background="Transparent"  BorderBrush="Transparent" Margin="10,20,10,20">
+            <Button Click="MealClicked" HorizontalAlignment="Stretch" Grid.Column="1" Background="Transparent"  BorderBrush="Transparent" Margin="10,20,10,20">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <Image Source="/RecipeApp;component/Assets/images/proba.jpg" Margin="0,0,0,5"
-                                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                    <TextBlock Name="tBNameOfMeal2" Text="Sushi" 
-                                       Style="{StaticResource tBNameOfMealStyles}"/>
+                    <Image Source="/RecipeApp;component/Assets/images/bolognese.jpeg" Margin="0,0,0,5"
+                           HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                    <TextBlock Name="tBNameOfMeal2" Text="Bolognese" 
+                               Style="{StaticResource tBNameOfMealStyles}"/>
                 </Grid>
             </Button>
 
             <!---Button3-->
-            <Button HorizontalAlignment="Stretch" Grid.Column="2" Background="Transparent" BorderBrush="Transparent" Margin="10,20,10,20">
+            <Button Click="MealClicked" HorizontalAlignment="Stretch" Grid.Column="2" Background="Transparent" BorderBrush="Transparent" Margin="10,20,10,20">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <Image Source="/RecipeApp;component/Assets/images/proba.jpg" Margin="0,0,0,5"
-                                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                    <TextBlock Name="tBNameOfMeal3" Text="Sushi" 
-                                       Style="{StaticResource tBNameOfMealStyles}"/>
+                    <Image Source="/RecipeApp;component/Assets/images/beefWellington.jpg" Margin="0,0,0,5"
+                           HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                    <TextBlock Name="tBNameOfMeal3" Text="Beef Wellington" 
+                               Style="{StaticResource tBNameOfMealStyles}"/>
                 </Grid>
             </Button>
 
             <!---Button4-->
-            <Button HorizontalAlignment="Stretch" Grid.Column="3" Background="Transparent"  BorderBrush="Transparent" Margin="10,20,10,20">
+            <Button Click="MealClicked" HorizontalAlignment="Stretch" Grid.Column="3" Background="Transparent"  BorderBrush="Transparent" Margin="10,20,10,20">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <Image Source="/RecipeApp;component/Assets/images/proba.jpg" Margin="0,0,0,5"
-                                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                    <TextBlock Name="tBNameOfMeal4" Text="Sushi" 
-                                       Style="{StaticResource tBNameOfMealStyles}"/>
+                    <Image Source="/RecipeApp;component/Assets/images/carbonara.png" Margin="0,0,0,5"
+                           HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                    <TextBlock Name="tBNameOfMeal4" Text="spaghetti alla carbonara" 
+                               Style="{StaticResource tBNameOfMealStyles}"/>
                 </Grid>
             </Button>
 
             <!---Button5-->
-            <Button HorizontalAlignment="Stretch" Grid.Column="4" Background="Transparent"  BorderBrush="Transparent" Margin="10,20,10,20">
+            <Button Click="MealClicked" HorizontalAlignment="Stretch" Grid.Column="4" Background="Transparent"  BorderBrush="Transparent" Margin="10,20,10,20 ">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <Image Source="/RecipeApp;component/Assets/images/proba.jpg" Margin="0,0,0,5"
-                                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                    <TextBlock Name="tBNameOfMeal5" Text="Sushi" 
-                                       Style="{StaticResource tBNameOfMealStyles}"/>
+                    <Image Source="/RecipeApp;component/Assets/images/friedChicken.jpeg" Margin="0,0,0,5"
+                           HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                    <TextBlock Name="tBNameOfMeal5" Text="Fried chicken" 
+                               Style="{StaticResource tBNameOfMealStyles}"/>
                 </Grid>
             </Button>
         </Grid>
-
-
-
     </Grid>
 </UserControl>
+
