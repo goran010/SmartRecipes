@@ -1,4 +1,4 @@
-﻿using System.Windows;
+﻿using System.ComponentModel;
 using System.Windows.Controls;
 using Newtonsoft.Json;
 using RecipeApp.services;
@@ -6,22 +6,26 @@ using RecipeApp.View.UserControls;
 
 namespace RecipeApp.Pages
     {
-    public partial class ShowRecipe : Page
+    public partial class ShowRecipe : Page, INotifyPropertyChanged
         {
+        // INotifyPropertyChanged event
+        public event PropertyChangedEventHandler? PropertyChanged; // Nullable event
+
         // Properties with automatic getters and setters
-        public string Country { get; }
-        public string RecipeName { get; }
-        public string ImagePath { get; }
-        public string Instructions { get; }
-        public string Category { get; }
+        public string Country { get; private set; }
+        public string RecipeName { get; private set; }
+        public string ImagePath { get; private set; }
+        public string Instructions { get; private set; }
+        public string Category { get; private set; }
 
         private readonly ApiService apiService;
+
         // Constructor to initialize properties
         public ShowRecipe ( string country, string recipeName, string imagePath, string instructions, string category )
-
             {
             InitializeComponent();
             apiService = new ApiService();
+
             Country = country;
             RecipeName = recipeName;
             ImagePath = imagePath;
@@ -36,41 +40,42 @@ namespace RecipeApp.Pages
                 }
             }
 
+        // Method to send API request
         private async void SendApiRequest ( string searchText )
             {
-            try
+            // Construct API endpoint
+            string apiEndpoint = $"https://www.themealdb.com/api/json/v1/1/search.php?s={searchText}";
+
+            // Get response from the API
+            string? jsonResponse = await apiService.GetMealAsync(apiEndpoint);
+
+            // Deserialize JSON response
+            MealsResponse? mealsResponse = JsonConvert.DeserializeObject<MealsResponse>(jsonResponse) ?? new MealsResponse();
+
+            // Process the response
+            if (mealsResponse.Meals != null && mealsResponse.Meals.Count > 0)
                 {
-                // Construct API endpoint
-                string apiEndpoint = $"https://www.themealdb.com/api/json/v1/1/search.php?s={searchText}";
+                // Update properties with the values from the API response
+                var meal = mealsResponse.Meals[0]; // Assuming you are interested in the first meal
+                Country = meal.StrArea ?? "Unknown Area";
+                RecipeName = meal.StrMeal ?? "Unknown Meal";
+                ImagePath = meal.StrMealThumb ?? "Unknown Thumb";
+                Category = meal.StrCategory ?? "Unknown Category";
+                Instructions = meal.StrInstructions ?? "Unknown Instructions";
 
-                // Get response from the API
-                string jsonResponse = await apiService.GetMealAsync(apiEndpoint);
-
-                // Deserialize JSON response
-                MealsResponse mealsResponse = JsonConvert.DeserializeObject<MealsResponse>(jsonResponse) ?? new MealsResponse();
-
-                // Process the response
-                if (mealsResponse.Meals != null && mealsResponse.Meals.Count > 0)
-                    {
-                    // Create a list of items
-                    List<string[]> allItems = mealsResponse.Meals.Select(meal => new string[]
-                    {
-                        string.IsNullOrEmpty(meal.StrMeal) ? "Unknown Meal" : meal.StrMeal,
-                        string.IsNullOrEmpty(meal.StrMealThumb) ? "Unknown Thumb" : meal.StrMealThumb,
-                        string.IsNullOrEmpty(meal.StrArea) ? "Unknown Area" : meal.StrArea,
-                        string.IsNullOrEmpty(meal.StrCategory) ? "Unknown Category" : meal.StrCategory,
-                        string.IsNullOrEmpty(meal.StrInstructions) ? "Unknown Instructions" : meal.StrInstructions
-                    }).ToList();
-
-                    // Invoke the method to update meals list
-                    ((MainWindow)System.Windows.Application.Current.MainWindow).HomePage_UpdateMealsList(allItems);
-                    }
+                // Notify property changes
+                NotifyPropertyChanged(nameof(Country));
+                NotifyPropertyChanged(nameof(RecipeName));
+                NotifyPropertyChanged(nameof(ImagePath));
+                NotifyPropertyChanged(nameof(Category));
+                NotifyPropertyChanged(nameof(Instructions));
                 }
-            catch (Exception ex)
-                {
-                MessageBox.Show($"Error: {ex.Message}");
-                }
+            }
+
+        // Method to notify property changes
+        protected virtual void NotifyPropertyChanged ( string propertyName )
+            {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
             }
         }
     }
-

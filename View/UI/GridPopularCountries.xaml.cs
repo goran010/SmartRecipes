@@ -36,7 +36,7 @@ namespace RecipeApp.View.UI
                 {
                         string.IsNullOrEmpty(meal.StrMeal) ? "Unknown Meal" : meal.StrMeal,
                         string.IsNullOrEmpty(meal.StrMealThumb) ? "Unknown Thumb" : meal.StrMealThumb,
-                        string.IsNullOrEmpty(meal.StrArea) ? "Unknown Area" : meal.StrArea,
+                        string.IsNullOrEmpty(meal.StrArea) ? searchArea : meal.StrArea,
                         string.IsNullOrEmpty(meal.StrCategory) ? "Unknown Category" : meal.StrCategory,
                         string.IsNullOrEmpty(meal.StrInstructions) ? "Unknown Instructions" : meal.StrInstructions
                 }).ToList();
