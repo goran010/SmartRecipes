@@ -11,6 +11,7 @@
   <ItemGroup>
     <None Remove="Assets\Fonts\Comfortaa-VariableFont_wght.ttf" />
     <None Remove="Assets\Fonts\Pacifico-Regular.ttf" />
+    <None Remove="Assets\images\gradient.png" />
     <None Remove="Assets\images\proba.jpg" />
   </ItemGroup>
 
@@ -22,6 +23,7 @@
   <ItemGroup>
     <Resource Include="Assets\Fonts\Comfortaa-VariableFont_wght.ttf" />
     <Resource Include="Assets\Fonts\Pacifico-Regular.ttf" />
+    <Resource Include="Assets\images\gradient.png" />
     <Resource Include="Assets\images\proba.jpg" />
   </ItemGroup>
 

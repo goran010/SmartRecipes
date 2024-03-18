@@ -53,7 +53,7 @@
 
         <!---BackroundRightGrid-->
         <Grid.Background>
-            <ImageBrush ImageSource="C:\Users\Admin\Desktop\RecipeApp\Assets\images\gradient.png"/>
+            <ImageBrush ImageSource="/RecipeApp;component/Assets/images/proba.jpg"/>
 
         </Grid.Background>
 
