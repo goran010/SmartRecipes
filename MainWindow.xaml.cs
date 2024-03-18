@@ -1,15 +1,16 @@
 ﻿using System.Windows;
 using RecipeApp.Pages;
+using RecipeApp.View.UI;
 
 namespace RecipeApp
     {
-    public partial class MainWindow : Window
         {
         private readonly HomePage homePage;
         private List<string[]> recipes;
 
         public MainWindow ()
             {
+        {
             InitializeComponent();
             MaxWidth = SystemParameters.PrimaryScreenWidth;
 
@@ -70,7 +71,6 @@ namespace RecipeApp
                 MessageBox.Show($"Navigation error: {ex.Message}");
                 }
             }
-
         private void NavigateToHomePage ( object? sender, EventArgs e )
             {
             try
@@ -86,3 +86,4 @@ namespace RecipeApp
 
         }
     }
+}

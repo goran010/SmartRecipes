@@ -40,7 +40,7 @@
 
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Border BorderBrush="#007ACC" BorderThickness="1" CornerRadius="10" Margin="5" Width="400">
+                    <Border BorderBrush="#007ACC" BorderThickness="1" CornerRadius="10" Margin="5" Width="400"  MouseLeftButtonDown="Card_Clicked">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />

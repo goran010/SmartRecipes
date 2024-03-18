@@ -56,7 +56,6 @@ namespace RecipeApp.View.UserControls
                 {
                 // Read the response from api
                 string jsonResponse = await apiService.GetMealAsync(apiEndpoint);
-                MealsResponse mealsResponse = new();
 
                 // Convert the JSON string
                 if (jsonResponse != null)
@@ -77,8 +76,8 @@ namespace RecipeApp.View.UserControls
                         // Check if strArea is null or empty before adding it to the list
                         string area = string.IsNullOrEmpty(meal.strArea) ? "Unknown Area" : meal.strArea;
 
-                        // Check if StrMealThumb is null or empty before adding it to the list
-                        string mealThumb = string.IsNullOrEmpty(meal.StrMealThumb) ? "Unknown Thumb" : meal.StrMealThumb;
+                    // Invoke the method to update meals list
+                    ((MainWindow)System.Windows.Application.Current.MainWindow).HomePage_UpdateMealsList(allItems);
 
                         // Add an array of strings to the list
                         allItems.Add([meal.StrMeal, mealThumb, area!]);

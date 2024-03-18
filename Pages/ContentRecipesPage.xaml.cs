@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 
 namespace RecipeApp.Pages
     {
@@ -7,6 +8,8 @@ namespace RecipeApp.Pages
         public string? RecipeName { get; set; }
         public string? ImagePath { get; set; }
         public string? Country { get; set; }
+        public string? Category { get; set; }
+        public string? Instructions { get; set; }
         }
 
     public partial class ContentRecipesPage : Page
@@ -27,25 +30,52 @@ namespace RecipeApp.Pages
 
         private void UpdateMealsListTextBox ( List<string[]> recipes )
             {
-            List<RecipeCard> recipeCards = [];
-
-            foreach (string[] recipe in recipes)
+            // Create a list of RecipeCard objects using LINQ
+            List<RecipeCard> recipeCards = recipes.Select(recipe => new RecipeCard
                 {
-                RecipeCard recipeCard = new()
-                    {
-                    RecipeName = recipe[0],
-                    ImagePath = recipe[1],
-                    Country = recipe[2]
-                    };
+                RecipeName = recipe[0],
+                ImagePath = recipe[1],
+                Country = recipe[2],
+                Category = recipe[3],
+                Instructions = recipe[4]
+                }).ToList();
 
-                recipeCards.Add(recipeCard);
-                }
-
+            // Set the ItemsSource of MealsListTextBox to the recipeCards list
             MealsListTextBox.ItemsSource = recipeCards;
+            }
 
+        private void Card_Clicked ( object sender, RoutedEventArgs e )
+            {
+            // Access the data context of the clicked item
+            if (sender is FrameworkElement frameworkElement && frameworkElement.DataContext is RecipeCard data)
+                {
+                // Ensure data is not null before accessing its properties
+                if (data != null)
+                    {
+                    // Extract recipe details from the data object
+                    string country = data.Country ?? "";
+                    string recipeName = data.RecipeName ?? "";
+                    string imagePath = data.ImagePath ?? "";
+                    string instructions = data.Instructions ?? "";
+                    string category = data.Category ?? "";
+
+                    // Create an object array with all the string properties
+                    object[] recipeDetails = [country, recipeName, imagePath, instructions, category];
+
+                    // Navigate to the recipe details page, passing the recipe details
+                    ((MainWindow)System.Windows.Application.Current.MainWindow).NavigateToShowRecipePage(recipeDetails);
+                    }
+                else
+                    {
+                    // Handle the case where data is null (optional)
+                    Console.WriteLine("Clicked item's data context is null.");
+                    }
+                }
             }
         }
     }
+
+
 
 
 
