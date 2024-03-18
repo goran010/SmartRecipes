@@ -42,7 +42,7 @@
 
             <!---PopularCountriesButtons-->
 
-            <UI:GridPopularCountries Grid.Row="2"/>
+            <UI:GridPopularCountries Grid.Row="2" x:Name="popularCountries"/>
         </Grid>
 
 

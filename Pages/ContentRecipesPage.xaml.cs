@@ -23,6 +23,9 @@ namespace RecipeApp.Pages
 
             // Show recipes on first load
             UpdateMealsListTextBox(recipes);
+
+            // Subscribe to events
+            searchBar.SearchResultReceived += UpdateMealsListTextBox;
             }
 
         private void UpdateMealsListTextBox ( List<string[]> recipes )
