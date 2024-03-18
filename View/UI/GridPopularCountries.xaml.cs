@@ -20,46 +20,34 @@ namespace RecipeApp.View.UI
 
         private async void SendApiRequest ( string searchArea )
             {
-            Console.WriteLine(searchArea);
-            //api endpoint
             string apiEndpoint = "https://www.themealdb.com/api/json/v1/1/filter.php?a=" + searchArea;
-            try
+
+            // Get response from the API
+            string jsonResponse = await apiService.GetMealAsync(apiEndpoint);
+
+            // Deserialize JSON response
+            MealsResponse mealsResponse = JsonConvert.DeserializeObject<MealsResponse>(jsonResponse) ?? new MealsResponse();
+
+            // Process the response
+            if (mealsResponse.Meals != null && mealsResponse.Meals.Count > 0)
                 {
-                // Read the response from api
-                string jsonResponse = await apiService.GetMealAsync(apiEndpoint);
-                MealsResponse mealsResponse = new();
+                // Create a list of items
+                List<string[]> allItems = mealsResponse.Meals.Select(meal => new string[]
+                {
+                        string.IsNullOrEmpty(meal.StrMeal) ? "Unknown Meal" : meal.StrMeal,
+                        string.IsNullOrEmpty(meal.StrMealThumb) ? "Unknown Thumb" : meal.StrMealThumb,
+                        string.IsNullOrEmpty(meal.StrArea) ? "Unknown Area" : meal.StrArea,
+                        string.IsNullOrEmpty(meal.StrCategory) ? "Unknown Category" : meal.StrCategory,
+                        string.IsNullOrEmpty(meal.StrInstructions) ? "Unknown Instructions" : meal.StrInstructions
+                }).ToList();
 
-                // Convert the JSON string
-                if (jsonResponse != null)
-                    {
-                    mealsResponse = JsonConvert.DeserializeObject<MealsResponse>(jsonResponse)!;
-                    }
+                // Invoke the method to update meals list
+                ((MainWindow)System.Windows.Application.Current.MainWindow).HomePage_UpdateMealsList(allItems);
 
-                // Access the value of strMeal
-                if (mealsResponse!.Meals?.Count > 0)
-                    {
-                    // create list of items
-                    List<string[]> allItems = [];
-
-                    // adding items to list
-                    foreach (Meal meal in mealsResponse.Meals)
-                        {
-                        // Check if strArea is null or empty before adding it to the list
-                        string area = searchArea;
-
-                        // Check if StrMealThumb is null or empty before adding it to the list
-                        string mealThumb = string.IsNullOrEmpty(meal.StrMealThumb) ? "Unknown Thumb" : meal.StrMealThumb;
-
-                        // Add an array of strings to the list
-                        allItems.Add([meal.StrMeal, mealThumb, area]);
-                        }
-                    // Invoke the SearchResultReceived event with the allItems list             
-                    SearchResultReceived?.Invoke(allItems);
-                    }
                 }
-            catch (Exception ex)
+            else
                 {
-                MessageBox.Show($"Error: {ex.Message}");
+                MessageBox.Show("No meals found in the response.");
                 }
             }
 

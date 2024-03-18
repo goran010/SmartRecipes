@@ -49,31 +49,28 @@ namespace RecipeApp.Pages
             // Access the data context of the clicked item
             if (sender is FrameworkElement frameworkElement && frameworkElement.DataContext is RecipeCard data)
                 {
-                // Ensure data is not null before accessing its properties
-                if (data != null)
-                    {
-                    // Extract recipe details from the data object
-                    string country = data.Country ?? "";
-                    string recipeName = data.RecipeName ?? "";
-                    string imagePath = data.ImagePath ?? "";
-                    string instructions = data.Instructions ?? "";
-                    string category = data.Category ?? "";
+                // Extract recipe details from the data object
+                string country = data.Country ?? "";
+                string recipeName = data.RecipeName ?? "";
+                string imagePath = data.ImagePath ?? "";
+                string instructions = data.Instructions ?? "";
+                string category = data.Category ?? "";
 
-                    // Create an object array with all the string properties
-                    object[] recipeDetails = [country, recipeName, imagePath, instructions, category];
+                // Create an object array with all the string properties
+                object[] recipeDetails = { country, recipeName, imagePath, instructions, category };
 
-                    // Navigate to the recipe details page, passing the recipe details
-                    ((MainWindow)System.Windows.Application.Current.MainWindow).NavigateToShowRecipePage(recipeDetails);
-                    }
-                else
-                    {
-                    // Handle the case where data is null (optional)
-                    Console.WriteLine("Clicked item's data context is null.");
-                    }
+                // Navigate to the recipe details page, passing the recipe details
+                ((MainWindow)Application.Current.MainWindow).NavigateToShowRecipePage(recipeDetails);
+                }
+            else
+                {
+                // Handle the case where data is null (optional)
+                Console.WriteLine("Clicked item's data context is null.");
                 }
             }
         }
     }
+
 
 
 

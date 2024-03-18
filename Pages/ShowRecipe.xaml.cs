@@ -1,66 +1,76 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.Windows;
 using System.Windows.Controls;
+using Newtonsoft.Json;
+using RecipeApp.services;
+using RecipeApp.View.UserControls;
 
 namespace RecipeApp.Pages
-{
-    public partial class ShowRecipe : Page, INotifyPropertyChanged
     {
-        private string _country;
-        public string Country
+    public partial class ShowRecipe : Page
         {
-            get { return _country; }
-            set { _country = value; NotifyPropertyChanged(nameof(Country)); }
-        }
+        // Properties with automatic getters and setters
+        public string Country { get; }
+        public string RecipeName { get; }
+        public string ImagePath { get; }
+        public string Instructions { get; }
+        public string Category { get; }
 
-        private string _recipeName;
-        public string RecipeName
-        {
-            get { return _recipeName; }
-            set { _recipeName = value; NotifyPropertyChanged(nameof(RecipeName)); }
-        }
+        private readonly ApiService apiService;
+        // Constructor to initialize properties
+        public ShowRecipe ( string country, string recipeName, string imagePath, string instructions, string category )
 
-        private string _imagePath;
-        public string ImagePath
-        {
-            get { return _imagePath; }
-            set { _imagePath = value; NotifyPropertyChanged(nameof(ImagePath)); }
-        }
-
-        private string _instructions;
-        public string Instructions
-        {
-            get { return _instructions; }
-            set { _instructions = value; NotifyPropertyChanged(nameof(Instructions)); }
-        }
-
-        private string _category;
-        public string Category
-        {
-            get { return _category; }
-            set { _category = value; NotifyPropertyChanged(nameof(Category)); }
-        }
-
-        public ShowRecipe(string country, string recipeName, string imagePath, string instructions, string category)
-        {
+            {
             InitializeComponent();
-
-            // Initialize properties with provided values
+            apiService = new ApiService();
             Country = country;
             RecipeName = recipeName;
             ImagePath = imagePath;
             Instructions = instructions;
             Category = category;
+            DataContext = this; // Set DataContext to this instance
 
+            // Check if RecipeName is "Unknown Meal"
+            if (Category == "Unknown Category")
+                {
+                SendApiRequest(RecipeName);
+                }
+            }
 
-            DataContext = this;
+        private async void SendApiRequest ( string searchText )
+            {
+            try
+                {
+                // Construct API endpoint
+                string apiEndpoint = $"https://www.themealdb.com/api/json/v1/1/search.php?s={searchText}";
 
-        }
+                // Get response from the API
+                string jsonResponse = await apiService.GetMealAsync(apiEndpoint);
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void NotifyPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+                // Deserialize JSON response
+                MealsResponse mealsResponse = JsonConvert.DeserializeObject<MealsResponse>(jsonResponse) ?? new MealsResponse();
+
+                // Process the response
+                if (mealsResponse.Meals != null && mealsResponse.Meals.Count > 0)
+                    {
+                    // Create a list of items
+                    List<string[]> allItems = mealsResponse.Meals.Select(meal => new string[]
+                    {
+                        string.IsNullOrEmpty(meal.StrMeal) ? "Unknown Meal" : meal.StrMeal,
+                        string.IsNullOrEmpty(meal.StrMealThumb) ? "Unknown Thumb" : meal.StrMealThumb,
+                        string.IsNullOrEmpty(meal.StrArea) ? "Unknown Area" : meal.StrArea,
+                        string.IsNullOrEmpty(meal.StrCategory) ? "Unknown Category" : meal.StrCategory,
+                        string.IsNullOrEmpty(meal.StrInstructions) ? "Unknown Instructions" : meal.StrInstructions
+                    }).ToList();
+
+                    // Invoke the method to update meals list
+                    ((MainWindow)System.Windows.Application.Current.MainWindow).HomePage_UpdateMealsList(allItems);
+                    }
+                }
+            catch (Exception ex)
+                {
+                MessageBox.Show($"Error: {ex.Message}");
+                }
+            }
         }
     }
-}
+
