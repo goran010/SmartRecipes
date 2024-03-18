@@ -21,7 +21,19 @@
         </Grid.RowDefinitions>
 
         <!--SearchBar-->
-        <UserControls:SearchBar x:Name="searchBar"/>
+        <Grid Grid.Row="0" Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- SearchBar -->
+            <UserControls:SearchBar x:Name="searchBar" Grid.Column="0" Margin="100,0,100,0"/>
+
+            <!-- Add Recipe Button -->
+            <Button Grid.Column="1" Style="{StaticResource GridLeftButton}" Content="Add Recipe" MaxWidth="120"/>
+        </Grid>
+                
 
         <!--GridCol1Row1-->
         <UI:GridCol1Row1 Grid.Row="1"/>
