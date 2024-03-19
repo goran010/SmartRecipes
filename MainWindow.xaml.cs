@@ -12,7 +12,6 @@ namespace RecipeApp
         public MainWindow ()
             {
             InitializeComponent();
-            MaxWidth = SystemParameters.PrimaryScreenWidth;
 
             // Instantiate HomePage
             homePage = new HomePage();
@@ -22,6 +21,7 @@ namespace RecipeApp
 
             // Subscribe to events
             homePage.UpdateMealsList += HomePage_UpdateMealsList;
+            homePage.NavigateToAddRecipe += NavigateToAddRecipePage;
 
             // Subscribe to navigation events
             Navigation.NavigateToContentRecipesPage += NavigateToContentRecipesPage;

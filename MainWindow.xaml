@@ -4,11 +4,8 @@
         xmlns:UserControls="clr-namespace:RecipeApp.View.UserControls"
         xmlns:UI="clr-namespace:RecipeApp.View.UI"
         xmlns:Pages="clr-namespace:RecipeApp.Pages"
-        Title="Recipe App" SizeToContent="WidthAndHeight"
-        MinHeight="700" 
-        MinWidth="900"
-        MaxWidth="{x:Static SystemParameters.PrimaryScreenWidth}" Width="1054">
-
+        Title="Recipe App"
+        WindowState="Maximized">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -17,10 +14,11 @@
         </Grid.ColumnDefinitions>
         <!-- Left navigation -->
         <UI:Navigation  Grid.Column="0" x:Name="Navigation" />
-        
+
         <!-- Frame to Navigate -->
         <Frame x:Name="mainFrame" NavigationUIVisibility="Hidden" Grid.Column="1"/>
     </Grid>
 </Window>
+
 
 

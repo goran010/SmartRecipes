@@ -6,6 +6,7 @@ namespace RecipeApp.Pages
     public partial class HomePage : Page
         {
         public event Action<List<string[]>> UpdateMealsList = items => { };
+        public event EventHandler NavigateToAddRecipe = delegate { };
 
         public HomePage ()
             {
@@ -29,6 +30,11 @@ namespace RecipeApp.Pages
                 {
                 MessageBox.Show($"Error updating meals list: {ex.Message}");
                 }
+            }
+
+        private void ButtonAddRecipe_Click ( object sender, RoutedEventArgs e )
+            {
+            NavigateToAddRecipe?.Invoke(this, EventArgs.Empty);
             }
         }
     }

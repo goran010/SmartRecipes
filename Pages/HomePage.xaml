@@ -32,7 +32,7 @@
 
             <!-- Add Recipe Button -->
             <Button Grid.Column="1" Style="{StaticResource GridLeftButton}" Content="Add Recipe" MinWidth="110" Margin="0,0,20,0" Padding="10"
-            HorizontalAlignment="Right"/>
+            HorizontalAlignment="Right" Click="ButtonAddRecipe_Click"/>
         </Grid>
 
 
