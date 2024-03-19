@@ -15,9 +15,9 @@
 
         <StackPanel Grid.Row="1" Name="stackPanelContent">
             <Button Style="{StaticResource GridLeftButton}" Content="Home" Click="HomeButton_Click"/>
-            <Button Style="{StaticResource GridLeftButton}" Content="Discover" Click="DiscoverButton_Click"/>
+            <Button Style="{StaticResource GridLeftButton}" Content="Discover recipes" Click="DiscoverButton_Click"/>
+            <Button Style="{StaticResource GridLeftButton}" Content="Add new recipe"  Click="AddNewRecipe_Click"/>
             <Button Style="{StaticResource GridLeftButton}" Content="About Us" Click="AboutUsButton_Click"/>
-            <Button Style="{StaticResource GridLeftButton}" Content="Something..."/>
         </StackPanel>
     </Grid>
 </UserControl>

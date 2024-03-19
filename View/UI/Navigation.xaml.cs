@@ -8,6 +8,7 @@ namespace RecipeApp.View.UI
         public event EventHandler NavigateToHomePage = delegate { };
         public event EventHandler NavigateToContentRecipesPage = delegate { };
         public event EventHandler NavigateToAboutPage = delegate { };
+        public event EventHandler NavigateToAddRecipe = delegate { };
         public Navigation ()
             {
             InitializeComponent();
@@ -42,6 +43,18 @@ namespace RecipeApp.View.UI
             try
                 {
                 NavigateToAboutPage?.Invoke(this, EventArgs.Empty);
+                }
+            catch (Exception ex)
+                {
+                MessageBox.Show($"Navigation error: {ex.Message}");
+                }
+            }
+
+        private void AddNewRecipe_Click ( object sender, RoutedEventArgs e )
+            {
+            try
+                {
+                NavigateToAddRecipe?.Invoke(this, EventArgs.Empty);
                 }
             catch (Exception ex)
                 {
