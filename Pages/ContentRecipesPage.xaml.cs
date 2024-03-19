@@ -12,6 +12,8 @@ namespace RecipeApp.Pages
         public string? Instructions { get; set; }
         }
 
+
+
     public partial class ContentRecipesPage : Page
         {
         private readonly List<string[]> recipes;

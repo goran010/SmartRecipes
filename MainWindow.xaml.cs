@@ -27,6 +27,7 @@ namespace RecipeApp
             Navigation.NavigateToContentRecipesPage += NavigateToContentRecipesPage;
             Navigation.NavigateToAboutPage += NavigateToAboutPage;
             Navigation.NavigateToHomePage += NavigateToHomePage;
+            Navigation.NavigateToAddRecipe += NavigateToAddRecipePage;
 
             Loaded += MainWindow_Loaded;
 
@@ -77,6 +78,19 @@ namespace RecipeApp
                 {
                 // Navigate to the existing instance of homePage
                 mainFrame.Content = homePage;
+                }
+            catch (Exception ex)
+                {
+                MessageBox.Show($"Navigation error: {ex.Message}");
+                }
+            }
+
+        private void NavigateToAddRecipePage ( object? sender, EventArgs e )
+            {
+            try
+                {
+                // Navigate to the about page
+                mainFrame.NavigationService?.Navigate(new AddRecipePage());
                 }
             catch (Exception ex)
                 {

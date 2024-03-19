@@ -6,6 +6,7 @@ using RecipeApp.services;
 
 namespace RecipeApp.View.UserControls
     {
+    // Represents a meal item
     public class Meal
         {
         public string StrMeal { get; set; }
@@ -20,36 +21,41 @@ namespace RecipeApp.View.UserControls
             }
         }
 
+    // Represents the response containing a list of meals
     public class MealsResponse
         {
         public List<Meal> Meals { get; set; }
+
         public MealsResponse ()
             {
-            Meals = [];
+            Meals = new List<Meal>();
             }
         }
 
+    // User control for the search bar
     public partial class SearchBar : UserControl
         {
-        private readonly ApiService apiService;
+        // Instance of the RecipeContext and ApiService classes
+        private readonly RecipeContext _recipeContext = new RecipeContext();
+        private readonly ApiService _apiService = new ApiService();
         public MainWindow MainWindow { get; set; } = null!;
 
+        // Event for notifying about search results
         public event Action<List<string[]>> SearchResultReceived = items => { };
-        public event Action<List<string[]>> NavigationRequested = items => { };
 
+        // Constructor
         public SearchBar ()
             {
             InitializeComponent();
 
-            // Initialize HttpClient
-            apiService = new ApiService();
-
-            //events
+            // Attach event handler for the GotFocus event of the searchTextBox
             searchTextBox.GotFocus += SearchTextBox_GotFocus;
+
+            // Initialize the SearchResultReceived event
             SearchResultReceived = delegate { };
             }
 
-        // sending api request and showing response
+        // Method to send an API request and handle the response
         private async void SendApiRequest ( string searchText )
             {
             try
@@ -58,31 +64,32 @@ namespace RecipeApp.View.UserControls
                 string apiEndpoint = $"https://www.themealdb.com/api/json/v1/1/search.php?s={searchText}";
 
                 // Get response from the API
-                string jsonResponse = await apiService.GetMealAsync(apiEndpoint);
+                string jsonResponse = await _apiService.GetMealAsync(apiEndpoint);
 
                 // Deserialize JSON response
                 MealsResponse mealsResponse = JsonConvert.DeserializeObject<MealsResponse>(jsonResponse) ?? new MealsResponse();
 
                 // Process the response
-                if (mealsResponse.Meals != null && mealsResponse.Meals.Count > 0)
+                if (mealsResponse.Meals != null && mealsResponse.Meals.Any())
                     {
-                    // Create a list of items
+                    // Create a list of items from the API response
                     List<string[]> allItems = mealsResponse.Meals.Select(meal => new string[]
                     {
-                        string.IsNullOrEmpty(meal.StrMeal) ? "Unknown Meal" : meal.StrMeal,
-                        string.IsNullOrEmpty(meal.StrMealThumb) ? "Unknown Thumb" : meal.StrMealThumb,
-                        string.IsNullOrEmpty(meal.StrArea) ? "Unknown Area" : meal.StrArea,
-                        string.IsNullOrEmpty(meal.StrCategory) ? "Unknown Category" : meal.StrCategory,
-                        string.IsNullOrEmpty(meal.StrInstructions) ? "Unknown Instructions" : meal.StrInstructions
+                        meal.StrMeal ?? "Unknown Meal",
+                        meal.StrMealThumb ?? "Unknown Thumb",
+                        meal.StrArea ?? "Unknown Area",
+                        meal.StrCategory ?? "Unknown Category",
+                        meal.StrInstructions ?? "Unknown Instructions"
                     }).ToList();
 
-                    // Invoke the method to update meals list
-                    ((MainWindow)System.Windows.Application.Current.MainWindow).HomePage_UpdateMealsList(allItems);
+                    // Search in the database for additional results
+                    allItems.AddRange(SearchInDatabase(searchText));
 
-                    // Clear search text box
+                    // Update the meals list in the main window
+                    ((MainWindow)Application.Current.MainWindow).HomePage_UpdateMealsList(allItems);
+
+                    // Clear the search text box and focus
                     searchTextBox.Text = "";
-
-                    // Clear focus and show placeholder if search text is empty
                     Keyboard.ClearFocus();
                     if (string.IsNullOrWhiteSpace(searchTextBox.Text))
                         searchPlaceholder.Visibility = Visibility.Visible;
@@ -98,8 +105,43 @@ namespace RecipeApp.View.UserControls
                 }
             }
 
+        // Method to search for similar recipes in the database
+        private List<string[]> SearchInDatabase ( string searchText )
+            {
+            List<string[]> searchResults = new List<string[]>();
 
-        // event handler when searchTextBox is submitet, send api requst with searchText
+            try
+                {
+                // Query the database to find recipes whose names contain the search string
+                var matchingRecipes = _recipeContext.RecipesData
+    .Where(recipe => recipe.RecipeName != null && recipe.RecipeName.Contains(searchText))
+    .ToList();
+
+
+                // Process the matching recipes
+                foreach (var recipe in matchingRecipes)
+                    {
+                    // Add recipe details to the search results list
+                    string[] recipeDetails =
+                    {
+                        recipe.RecipeName ?? "Unknown Recipe",
+                        "", // Assuming no image path in the database
+                        recipe.Country ?? "Unknown Country",
+                        recipe.Category ?? "Unknown Category",
+                        recipe.Instructions ?? "Unknown Instructions"
+                    };
+                    searchResults.Add(recipeDetails);
+                    }
+                }
+            catch (Exception ex)
+                {
+                MessageBox.Show($"Error searching in database: {ex.Message}");
+                }
+
+            return searchResults;
+            }
+
+        // Event handler when the searchTextBox is submitted
         private void SearchTextBox_KeyDown ( object sender, KeyEventArgs e )
             {
             if (e.Key == Key.Enter)
@@ -109,18 +151,18 @@ namespace RecipeApp.View.UserControls
                 }
             }
 
-
-        // event handler when searchTextBox text is changed
-        void SearchTextBox_TextChanged ( object sender, TextChangedEventArgs e )
+        // Event handler when the searchTextBox text is changed
+        private void SearchTextBox_TextChanged ( object sender, TextChangedEventArgs e )
             {
-            searchPlaceholder.Visibility = System.Windows.Visibility.Collapsed;
+            searchPlaceholder.Visibility = Visibility.Collapsed;
             }
 
-        // When the TextBox get focus, hide the placeholder
+        // Event handler when the searchTextBox gets focus
         private void SearchTextBox_GotFocus ( object sender, RoutedEventArgs e )
             {
-            // When the TextBox gets focus, hide the placeholder
-            searchPlaceholder.Visibility = System.Windows.Visibility.Collapsed;
+            // Hide the placeholder when the TextBox gets focus
+            searchPlaceholder.Visibility = Visibility.Collapsed;
             }
         }
     }
+

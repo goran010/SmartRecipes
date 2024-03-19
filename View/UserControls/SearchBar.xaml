@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:RecipeApp.View.UserControls"
              mc:Ignorable="d" 
              Height="30" d:DesignWidth="300">
-    <Grid Height="30">
+    <Grid Height="30" MaxWidth="400" MinWidth="400">
         <Border Background="white" CornerRadius="5" Padding="7,0,7,0 " BorderThickness="1" BorderBrush="#CCCCCC" >
             <Grid>
                 <!-- Placeholder TextBlock -->
