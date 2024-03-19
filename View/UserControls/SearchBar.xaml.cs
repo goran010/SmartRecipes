@@ -56,54 +56,53 @@ namespace RecipeApp.View.UserControls
             }
 
         // Method to send an API request and handle the response
-        private async void SendApiRequest ( string searchText )
+         private async void SendApiRequest ( string searchText )
+     {
+     try
+         {
+         // Construct API endpoint
+         string apiEndpoint = $"https://www.themealdb.com/api/json/v1/1/search.php?s={searchText}";
+
+         // Get response from the API
+         string jsonResponse = await _apiService.GetMealAsync(apiEndpoint);
+
+         // Deserialize JSON response
+         MealsResponse mealsResponse = JsonConvert.DeserializeObject<MealsResponse>(jsonResponse) ?? new MealsResponse();
+
+         List<string[]> allItems = [];
+
+         // Process the response
+         if (mealsResponse.Meals != null && mealsResponse.Meals.Any())
+             {
+             // Create a list of items from the API response
+             allItems = mealsResponse.Meals.Select(meal => new string[]
             {
-            try
-                {
-                // Construct API endpoint
-                string apiEndpoint = $"https://www.themealdb.com/api/json/v1/1/search.php?s={searchText}";
+                 meal.StrMeal ?? "Unknown Meal",
+                 meal.StrMealThumb ?? "Unknown Thumb",
+                 meal.StrArea ?? "Unknown Area",
+                 meal.StrCategory ?? "Unknown Category",
+                 meal.StrInstructions ?? "Unknown Instructions"
+            }).ToList();
 
-                // Get response from the API
-                string jsonResponse = await _apiService.GetMealAsync(apiEndpoint);
 
-                // Deserialize JSON response
-                MealsResponse mealsResponse = JsonConvert.DeserializeObject<MealsResponse>(jsonResponse) ?? new MealsResponse();
 
-                // Process the response
-                if (mealsResponse.Meals != null && mealsResponse.Meals.Any())
-                    {
-                    // Create a list of items from the API response
-                    List<string[]> allItems = mealsResponse.Meals.Select(meal => new string[]
-                    {
-                        meal.StrMeal ?? "Unknown Meal",
-                        meal.StrMealThumb ?? "Unknown Thumb",
-                        meal.StrArea ?? "Unknown Area",
-                        meal.StrCategory ?? "Unknown Category",
-                        meal.StrInstructions ?? "Unknown Instructions"
-                    }).ToList();
+             // Clear the search text box and focus
+             searchTextBox.Text = "";
+             Keyboard.ClearFocus();
+             if (string.IsNullOrWhiteSpace(searchTextBox.Text))
+                 searchPlaceholder.Visibility = Visibility.Visible;
+             }
+         // Search in the database for additional results
+         allItems.AddRange(SearchInDatabase(searchText));
 
-                    // Search in the database for additional results
-                    allItems.AddRange(SearchInDatabase(searchText));
-
-                    // Update the meals list in the main window
-                    ((MainWindow)Application.Current.MainWindow).HomePage_UpdateMealsList(allItems);
-
-                    // Clear the search text box and focus
-                    searchTextBox.Text = "";
-                    Keyboard.ClearFocus();
-                    if (string.IsNullOrWhiteSpace(searchTextBox.Text))
-                        searchPlaceholder.Visibility = Visibility.Visible;
-                    }
-                else
-                    {
-                    MessageBox.Show("No meals found in the response.");
-                    }
-                }
-            catch (Exception ex)
-                {
-                MessageBox.Show($"Error: {ex.Message}");
-                }
-            }
+         // Update the meals list in the main window
+         ((MainWindow)Application.Current.MainWindow).HomePage_UpdateMealsList(allItems);
+         }
+     catch (Exception ex)
+         {
+         MessageBox.Show($"Error: {ex.Message}");
+         }
+     }
 
         // Method to search for similar recipes in the database
         private List<string[]> SearchInDatabase ( string searchText )
