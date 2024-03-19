@@ -14,12 +14,16 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace RecipeApp.Pages
-{
-    public partial class AboutPage : Page
     {
-        public AboutPage()
+    // This namespace contains the code for pages in the RecipeApp application
+    public partial class AboutPage : Page
         {
+        // Constructor for the AboutPage class
+        public AboutPage ()
+            {
+            // Call the InitializeComponent method to initialize the visual components defined in XAML
             InitializeComponent();
+            }
         }
     }
-}
+

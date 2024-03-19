@@ -13,35 +13,55 @@ namespace RecipeApp.View.UI
         // Method to handle the Click event of the buttons
         private void MealClicked ( object sender, RoutedEventArgs e )
             {
-            string mealName = "";
-            // Check if the sender is a Button
+            // Extract meal name from the clicked button
+            string? mealName = GetMealName(sender);
+
+            // Proceed if meal name is not null or empty
+            if (!string.IsNullOrEmpty(mealName))
+                {
+                // Initialize variables for recipe details
+                var country = string.Empty;
+                var imagePath = string.Empty;
+                var instructions = string.Empty;
+                var category = "Unknown Category";
+
+                // Assign mealName to recipeName
+                var recipeName = mealName;
+
+
+                // Create an object array with all the string properties
+                object[] recipeDetails = [country, recipeName, imagePath, instructions, category];
+
+                // Navigate to the recipe details page, passing the recipe details
+                ((MainWindow)Application.Current.MainWindow).NavigateToShowRecipePage(recipeDetails);
+                }
+            }
+
+        // Helper method to extract meal name from the clicked button
+        private static string? GetMealName ( object sender )
+            {
             if (sender is Button clickedButton)
                 {
-                // Extract the meal name from the TextBlock associated with the clicked Button
+                // Extract the content of the clicked button
                 if (clickedButton.Content is Grid buttonContent)
                     {
+                    // Iterate through children of the button content to find the TextBlock with the meal name
                     foreach (var child in buttonContent.Children)
                         {
                         if (child is TextBlock textBlock && textBlock.Name.StartsWith("tBNameOfMeal"))
                             {
-                            mealName = textBlock.Text;
+                            // Retrieve and return the meal name
+                            string mealName = textBlock.Text;
                             Console.WriteLine($"Clicked meal: {mealName}");
-                            break;
+                            return mealName;
                             }
                         }
                     }
                 }
-            string country = "";
-            string recipeName = mealName;
-            string imagePath = "";
-            string instructions = "";
-            string category = "Unknown Category";
 
-            // Create an object array with all the string properties
-            object[] recipeDetails = [country, recipeName, imagePath, instructions, category];
-
-            // Navigate to the recipe details page, passing the recipe details
-            ((MainWindow)Application.Current.MainWindow).NavigateToShowRecipePage(recipeDetails);
+            // Return null if meal name extraction fails
+            return null;
             }
         }
     }
+

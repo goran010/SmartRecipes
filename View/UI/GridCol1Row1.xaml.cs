@@ -15,9 +15,6 @@ using System.Windows.Shapes;
 
 namespace RecipeApp.View.UI
 {
-    /// <summary>
-    /// Interaction logic for GridCol1Row1.xaml
-    /// </summary>
     public partial class GridCol1Row1 : UserControl
     {
         public GridCol1Row1()
