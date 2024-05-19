@@ -2,11 +2,11 @@ This app is the final project for the Object-Oriented Programming course in thir
 
 .NET Object-Oriented Programming:
 
--Understanding and applying OOP principles in .NET, including encapsulation, inheritance, polymorphism, and abstraction.
--Designing and implementing classes and objects to create modular and reusable code.
--Utilizing interfaces and abstract classes to define contracts and base functionalities.
--Implementing design patterns to solve common software design problems and improve code maintainability.
--Managing object lifecycle and memory management in .NET applications
+- Understanding and applying OOP principles in .NET, including encapsulation, inheritance, polymorphism, and abstraction.
+- Designing and implementing classes and objects to create modular and reusable code.
+- Utilizing interfaces and abstract classes to define contracts and base functionalities.
+- Implementing design patterns to solve common software design problems and improve code maintainability.
+- Managing object lifecycle and memory management in .NET applications
 
 
 Learning Opportunities
@@ -19,6 +19,6 @@ DB Operations:
 
 Fetching Data from APIs:
 
--Making API requests using HTTP methods
--Parsing and handling JSON responses.
--Integrating API data into the application and managing asynchronous data fetching.
+- Making API requests using HTTP methods
+- Parsing and handling JSON responses.
+- Integrating API data into the application and managing asynchronous data fetching.
